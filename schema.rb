@@ -7,6 +7,8 @@ DataMapper.setup(:default, 'sqlite::memory:')
 class User
   include DataMapper::Resource
 
+  has n, :user_artists
+
   property :username, String, :key => true
   property :updated_at, DateTime
 end
@@ -14,7 +16,10 @@ end
 class Artist
   include DataMapper::Resource
 
-  has n, :countries
+  has n, :artist_images
+  has n, :tags
+  has n, :user_artists
+  has n, :countries, :through => Resource
 
   property :music_brainz_id, String, :key => true
   property :name, String
@@ -31,6 +36,25 @@ class ArtistImage
   property :size, String
 end
 
+class Tag
+  include DataMapper::Resource
+
+  has n, :artists, :through => Resource
+  has n, :tag_countries
+
+  property :tag, String, :key => true
+end
+
+class Country
+  include DataMapper::Resource
+
+  has n, :tag_countries
+
+  property :iso_code, String, :key => true
+  property :name, String
+  property :updated_at, DateTime
+end
+
 class UserArtist
   include DataMapper::Resource
 
@@ -41,11 +65,11 @@ class UserArtist
   property :play_count, Numeric
 end
 
-class Country
+class TagCountry
   include DataMapper::Resource
 
-  property :iso_code, String, :key => true
-  property :updated_at, DateTime
+  belongs_to :tag, :key => true
+  belongs_to :country, :key => true
 end
 
 DataMapper.finalize
