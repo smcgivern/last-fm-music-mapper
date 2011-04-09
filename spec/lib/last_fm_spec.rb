@@ -21,7 +21,7 @@ describe 'LastFM::Base.limit_rate' do
     @base.recent_requests = []
     @base.instance_variable_set(:@sleep, 0)
 
-    def @base.sleep t; Kernel::sleep(t); @sleep += t; end
+    def @base.sleep(t); Kernel::sleep(t); @sleep += t; end
   end
 
   it 'should sleep if there are too many recent requests' do
@@ -49,7 +49,39 @@ describe 'LastFM::Base.limit_rate' do
   end
 end
 
+describe 'LastFM::Base.api_request' do
+  before do
+    @base = LastFM::Base.clone
+
+    @base.instance_variable_set(:@rate_limited, false)
+
+    def @base.limit_rate; @rate_limited = true; end
+    def @base.rate_limited?; @rate_limited; end
+  end
+
+  it 'should call limit_rate' do
+    @base.api_request('spec/fixture/last_fm_user_get_top_artists.json')
+    @base.rate_limited?.should.be.true
+  end
+
+  it 'should parse the results as JSON' do
+    json = @base.api_request('spec/fixture/last_fm_user_get_top_artists.json')
+
+    json.should.satisfy {|x| x.class == Hash}
+    json['topartists']['@attr']['user'].should.equal 'RJ'
+  end
+end
+
 describe 'LastFM::Base.method_missing' do
+  before do
+    class LastFM::Test; end
+
+    class LastFM::Test::User < LastFM::Base
+      def self.api_request(s); @address = s; end
+      def self.last_address; @address; end
+    end
+  end
+
   it 'should raise an ArgumentError if there are no methods for the class' do
     lambda {LastFM::Base.not_an_api_call}.should.raise(ArgumentError).
       message.should.match(/No methods found/)
@@ -66,5 +98,13 @@ describe 'LastFM::Base.method_missing' do
   end
 
   it 'should allow the base parameters to be overwritten' do
+    LastFM::Test::User.get_top_artists(:domain => 'localhost',
+                                       :user => 'rj')
+
+    last_address = LastFM::Test::User.last_address
+    address = LastFM::TEMPLATES[:user][:get_top_artists].extract(last_address)
+
+    address['domain'].should.equal 'localhost'
+    address['user'].should.equal 'rj'
   end
 end

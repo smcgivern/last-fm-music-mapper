@@ -1,5 +1,6 @@
 require 'addressable/template'
 require 'json'
+require 'open-uri'
 
 # A minimal implementation of the read-only Last.fm 2.0 API methods. Handles
 # rate limiting as per the terms of service (no more than 5 requests / second).
@@ -62,7 +63,7 @@ module LastFM
     def self.api_request(address)
       limit_rate
 
-      open(address).read
+      JSON.parse(open(address).read)
     end
 
     def self.method_missing(method, params={})
@@ -99,9 +100,7 @@ module LastFM
               "Missing required parameters: #{missing_params.join(', ')}")
       end
 
-      address = template.expand(default_params.merge(params))
-      # open uri - limit speed
-      # parse json
+      api_request(template.expand(default_params.merge(params)))
     end
   end
 
