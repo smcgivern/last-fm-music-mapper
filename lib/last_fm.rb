@@ -14,8 +14,8 @@ module LastFM
     @@requests_per_minute = 300
     @@recent_requests = []
 
-    # Create accessorts for class variables (used by all subclasses,
-    # so can be set anywhere.
+    # Create accessors for class variables (used by all subclasses, so
+    # can be set anywhere.
     self.class_variables.each do |var|
       (class << self; self; end).class_eval do
         define_method("#{var[2..-1]}") {class_variable_get(var)}
