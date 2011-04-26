@@ -6,14 +6,27 @@ require 'nokogiri'
 # supported at present, not divergent or
 module ThematicMap
   class << self
-    @@map_file = :world_compact
+    @@map = :world_compact
     @@output_format = 'svg'
     @@output_filename = 'thematic_map'
 
     # http://www.personal.psu.edu/cab38/ColorBrewer/ColorBrewer_RGB.html
     @@colour_palette = ['#000000']
 
-    def create_map; self.colour_palette; end
+    def map_file; Symbol === map ? "lib/thematic_map/maps/#{map}.svg" : map; end
+    def map_xml; Nokogiri::XML(open(map_file)); end
+
+    def create_map(iso_codes)
+      output_xml = map_xml
+
+      iso_codes.each do |iso_code|
+        output_xml.search("##{iso_code} path").each do |path|
+          path['style'] = "fill : #{colour_palette.first};"
+        end
+      end
+
+      open("#{output_filename}.#{output_format}", 'w').puts(output_xml.to_xml)
+    end
   end
 
   # Create accessors for class variables (used by all subclasses, so
