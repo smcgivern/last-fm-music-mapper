@@ -37,7 +37,7 @@ module ThematicMap
 
     methods.each do |meth|
       (class << self; self; end).class_eval do
-        self.send(:define_method, meth) {class_variable_get(var)}
+        define_method(meth) {class_variable_get(var)}
         define_method("#{meth}=") {|x| class_variable_set(var, x)}
       end
     end
