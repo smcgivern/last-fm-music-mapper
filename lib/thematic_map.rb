@@ -5,6 +5,7 @@ require 'nokogiri'
 # the colour scale and magnitudes given.
 class ThematicMap
   attr_accessor :map, :division_method, :division_size, :colour_palette
+  alias :color_palette :colour_palette
 
   def initialize
     # Map file to use; if a symbol, taken from lib/thematic_map/maps/ directory.
