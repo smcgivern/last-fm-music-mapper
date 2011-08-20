@@ -58,7 +58,6 @@ class ThematicMap
     return potential_numbers.min if ideal_number < potential_numbers.min
   end
 
-  # http://www.abs.gov.au/websitedbs/D3110124.NSF/497f562f857fcc30ca256eb00001b48e/8b31f86f2280f061ca256d8a00020330!OpenDocument
   def value_division(value, values)
     send(division_method, values).each_with_index.
       select {|x, i| x <= value}.
@@ -66,7 +65,12 @@ class ThematicMap
       last
   end
 
-  def equal_count_division(values); end
+  def equal_count_division(values)
+    range_size = values.uniq.size / number_of_divisions(values)
+    ranges = Array.new(number_of_divisions(values))
+
+    ranges.each_with_index.map {|x, i| values.uniq[range_size * i]}
+  end
 
   def equal_ranges_division(values)
     range_size = (values.max - values.min + 1) / number_of_divisions(values)
@@ -74,8 +78,6 @@ class ThematicMap
 
     ranges.each_with_index.map {|x, i| values.min + range_size * i}
   end
-
-  def quantile_division(values); end
 
   # Takes a hash where the keys are ISO codes and the values are the
   # values to be weighted.

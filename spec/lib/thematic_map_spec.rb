@@ -56,3 +56,58 @@ describe 'ThematicMap#number_of_divisions' do
     end.number_of_divisions([1, 2, 3]).should.equal 2
   end
 end
+
+describe 'ThematicMap#value_division' do
+  it 'should place the value in a division, by index' do
+    ThematicMap.new do |map|
+      map.division_method = :equal_count_division
+      map.value_division(1, [1, 2, 3]).should.equal 0
+      map.value_division(1, [0, 1, 2]).should.equal 1
+      map.value_division(1, [-1, 0, 1]).should.equal 2
+    end
+  end
+
+  it 'should use the highest possible division' do
+    ThematicMap.new do |map|
+      map.division_method = :equal_count_division
+      map.value_division(1.5, [1, 2, 3]).should.equal 0
+      map.value_division(1.5, [0, 1, 2]).should.equal 1
+      map.value_division(1.5, [-1, 0, 1]).should.equal 2
+    end
+  end
+
+  it 'should use @division_method' do
+    values = [1, 2, 3, 10]
+
+    ThematicMap.new do |map|
+      map.division_method = :equal_count_division
+      map.value_division(3, values).should.equal 2
+      map.division_method = :equal_ranges_division
+      map.value_division(3, values).should.equal 0
+    end
+  end
+end
+
+describe 'ThematicMap#equal_count_division' do
+  it 'should put an equal number of items in division' do
+    ThematicMap.new.equal_count_division([1, 2, 3, 4, 5, 100]).
+      should.equal [1, 3, 5]
+  end
+
+  it 'should not duplicate range beginnings' do
+    ThematicMap.new.equal_count_division([1, 1, 2, 3, 3]).
+      should.equal [1, 2, 3]
+  end
+end
+
+describe 'ThematicMap#equal_ranges_division' do
+  it 'should make each division the same size' do
+    ThematicMap.new.equal_ranges_division([1, 2, 3, 4, 5, 10]).
+      should.equal [1, 4, 7]
+  end
+
+  it 'should not require a value in each division' do
+    ThematicMap.new.equal_ranges_division([1, 2, 3, 4, 5, 100]).
+      should.equal [1, 34, 67]
+  end
+end
