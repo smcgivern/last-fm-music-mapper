@@ -2,7 +2,9 @@ require 'dm-core'
 require 'dm-migrations'
 
 DataMapper::Logger.new($stdout, :debug)
-DataMapper.setup(:default, 'sqlite::memory:')
+DataMapper.setup(:default,
+                 :adapter  => 'sqlite3',
+                 :database => 'last_fm_music_mapper.db')
 
 class User
   include DataMapper::Resource
