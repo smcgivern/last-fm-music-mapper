@@ -4,7 +4,7 @@ require 'dm-migrations'
 DataMapper::Logger.new($stdout, :debug)
 DataMapper.setup(:default,
                  :adapter  => 'sqlite3',
-                 :database => 'last_fm_music_mapper.db')
+                 :database => 'last_fm_music_mapper.sqlite')
 
 class User
   include DataMapper::Resource
