@@ -4,6 +4,7 @@ require 'open-uri'
 
 # A minimal implementation of the read-only Last.fm 2.0 API methods. Handles
 # rate limiting as per the terms of service (no more than 5 requests / second).
+#
 module LastFM
   class Config
     @@api_domain = 'ws.audioscrobbler.com'
@@ -14,8 +15,9 @@ module LastFM
     @@requests_per_minute = 300
     @@recent_requests = []
 
-    # Create accessors for class variables (used by all subclasses, so
-    # can be set anywhere.
+    # Create accessors for class variables (used by all subclasses, so can be
+    # set anywhere).
+    #
     self.class_variables.each do |var|
       (class << self; self; end).class_eval do
         define_method("#{var[2..-1]}") {class_variable_get(var)}
@@ -25,12 +27,14 @@ module LastFM
   end
 
   # Addressable templates for each method's parameters defined in PARAMS below.
+  #
   TEMPLATES = {}
 
   # Method parameters. Apart from :base, which is a special case, the first
   # level of the hash represents a Last.fm class (user, tag, etc.). A
   # corresponding Ruby class will be created with methods available as in the
   # hash.
+  #
   PARAMS = {
     :base => {
       :required => [:method, :api_key, :format],
@@ -111,6 +115,7 @@ module LastFM
 
     # Create class named after klass (upper-casing first letter), inheriting
     # from Base, and with no methods of its own.
+    #
     self.const_set(klass.to_s.gsub(/\b\w/){ $&.upcase }, Class.new(Base))
 
     TEMPLATES[klass] ||= {}
