@@ -51,6 +51,9 @@ module LastFM
       },
     },
     :artist => {
+      :get_info => {
+        :optional => [:artist, :mbid, :lang, :autocorrect, :username],
+      },
       :get_top_tags => {
         :optional => [:artist, :mbid, :autocorrect],
       },
@@ -113,8 +116,8 @@ module LastFM
       end
 
       template = TEMPLATES[klass.to_sym][method.to_sym]
-      required_params = allowed_params[:required]
-      optional_params = allowed_params[:optional]
+      required_params = (allowed_params[:required] || [])
+      optional_params = (allowed_params[:optional] || [])
 
       default_params = {
         :domain => api_domain,
