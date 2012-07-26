@@ -1,4 +1,6 @@
 require 'addressable/template'
+require 'digest/sha1'
+require 'fileutils'
 require 'json'
 require 'open-uri'
 
@@ -14,6 +16,9 @@ module LastFM
 
     @@requests_per_minute = 300
     @@recent_requests = []
+
+    @@cache_for = 7 * 24 * 60 * 60
+    @@cache_directory = nil
 
     # Create accessors for class variables (used by all subclasses, so can be
     # set anywhere).
@@ -66,10 +71,34 @@ module LastFM
       recent_requests << Time.now
     end
 
+    def self.cache_to(filename)
+      if cache_directory
+        FileUtils.mkdir_p(cache_directory)
+
+        cache_file = File.join(cache_directory, filename)
+
+        if File.exist?(cache_file)
+          if File.mtime(cache_file) > (Time.now - cache_for)
+            return open(cache_file).read
+          else
+            File.delete(cache_file)
+          end
+        end
+      end
+
+      block_return = yield
+
+      open(cache_file, 'w').puts(block_return) if cache_directory
+
+      block_return
+    end
+
     def self.api_request(address)
       limit_rate
 
-      JSON.parse(open(address).read)
+      response = cache_to(Digest::SHA1.hexdigest(address)) {open(address).read}
+
+      JSON.parse(response)
     end
 
     def self.method_missing(method, params={})
