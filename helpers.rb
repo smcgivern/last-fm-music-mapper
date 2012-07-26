@@ -2,8 +2,6 @@ require 'json'
 require 'schema'
 require 'lib/last_fm'
 
-SETTINGS = JSON.parse(open('settings.json').read)
-
 set :haml, {:format => :html5}
 set :views, "#{File.dirname(__FILE__)}/view"
 LastFM::Config.api_key = SETTINGS['last_fm']['api_key']

@@ -1,5 +1,6 @@
 {
-  "last_fm": {
-    "api_key": "foobarbazquux"
-  }
+    "last_fm": {
+        "api_key": "foobarbazquux",
+        "cache_directory": "tmp/cache/"
+    }
 }
