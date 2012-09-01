@@ -1,7 +1,3 @@
-require 'json'
-require 'schema'
-require 'lib/last_fm'
-
 set :haml, {:format => :html5}
 set :views, "#{File.dirname(__FILE__)}/view"
 LastFM::Config.api_key = SETTINGS['last_fm']['api_key']
@@ -26,4 +22,9 @@ def load_user_artists(user_artists, period='overall')
   end
 
   user.reload
+end
+
+helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
 end

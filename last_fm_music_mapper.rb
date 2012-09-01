@@ -1,6 +1,7 @@
 require 'json'
 require 'sinatra'
 require 'sinatra/reloader'
+
 require 'helpers'
 require 'lib/last_fm'
 require 'schema'
@@ -20,9 +21,13 @@ get '/' do
 end
 
 get '/::username/?' do
-  username = params['username']
-  user_artists = LastFM::User.get_top_artists(:user => username,
+  @user = User.first_or_create(:username => params['username'])
+
+  user_artists = LastFM::User.get_top_artists(:user => @user.username,
+                                              :period => '7day',
                                               :limit => 10_000)
 
-  user = load_user_artists(username, user_artists)
+  @user.load_artists(user_artists, period='7day')
+
+  haml :user
 end
