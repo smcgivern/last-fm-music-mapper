@@ -1,7 +1,8 @@
-require 'rack'
-require 'bundler/setup'
-require 'last_fm_music_mapper'
 require 'ruby-prof'
+
+require 'bundler/setup'
+require 'rack'
+require 'last_fm_music_mapper'
 
 use Rack::RubyProf, :path => 'tmp/profile/'
 
