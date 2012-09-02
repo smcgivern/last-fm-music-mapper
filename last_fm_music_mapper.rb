@@ -27,7 +27,7 @@ get '/::username/?' do
                                               :period => '7day',
                                               :limit => 10_000)
 
-  @user.load_artists(user_artists, period='7day')
+  @user.load_artists(user_artists)
 
   haml :user
 end

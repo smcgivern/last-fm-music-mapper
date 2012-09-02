@@ -6,8 +6,10 @@ class User
   property :username, String, :key => true
   property :updated_at, Time
 
-  def load_artists(user_artists, period='overall')
+  def load_artists(user_artists)
     return if updated_at < (Time.now - 7 * 24 * 60 * 60)
+
+    period = user_artists['topartists']['@attr']['type']
 
     user_artists['topartists']['artist'].each do |a|
       artist = Artist.first_or_create(:music_brainz_id => Artist.make_mbid(a))
