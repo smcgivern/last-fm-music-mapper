@@ -16,7 +16,7 @@ end
 
 describe 'LastFM::Base.limit_rate' do
   before do
-    @base = LastFM::Base.clone
+    @base = LastFM::Base.dup
 
     @base.recent_requests = []
     @base.instance_variable_set(:@sleep, 0)
@@ -51,7 +51,7 @@ end
 
 describe 'LastFM::Base.api_request' do
   before do
-    @base = LastFM::Base.clone
+    @base = LastFM::Base.dup
 
     @base.instance_variable_set(:@rate_limited, false)
 
