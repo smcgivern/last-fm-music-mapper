@@ -1,5 +1,5 @@
-require 'spec/setup'
-require 'lib/last_fm'
+require './spec/setup'
+require './lib/last_fm'
 
 describe 'LastFM::Config' do
   it 'should create accessor methods for all class variables' do

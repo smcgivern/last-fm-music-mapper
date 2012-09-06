@@ -1,5 +1,5 @@
-require 'model/period'
-require 'model/country'
+require './model/period'
+require './model/country'
 
 PERIODS = [
            {:identifier => '7day', :name => 'Last 7 days'},

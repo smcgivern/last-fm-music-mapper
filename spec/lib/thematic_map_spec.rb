@@ -1,5 +1,5 @@
-require 'spec/setup'
-require 'lib/thematic_map'
+require './spec/setup'
+require './lib/thematic_map'
 
 describe 'ThematicMap.new' do
   it 'should provide the object as a block' do

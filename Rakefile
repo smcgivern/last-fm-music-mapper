@@ -5,5 +5,5 @@ task :spec do
   Bacon.extend Bacon::TestUnitOutput
   Bacon.summary_on_exit
 
-  Dir['spec/**/*.rb'].each {|f| require f}
+  Dir['spec/**/*.rb'].each {|f| require "./#{f}"}
 end
