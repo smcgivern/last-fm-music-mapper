@@ -1,5 +1,5 @@
 require './spec/setup'
-require './schema'
+require './model/schema'
 
 describe 'User.load_artists' do
   it 'should load artists from a hash' do

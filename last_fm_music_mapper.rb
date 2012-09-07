@@ -1,16 +1,7 @@
-require 'json'
 require 'sinatra'
 require 'sinatra/reloader'
 
-require 'helpers'
-require 'lib/last_fm'
-require 'schema'
-
-SETTINGS = JSON.parse(open('settings.json').read)
-
-SETTINGS['last_fm'].each do |key, value|
-  LastFM::Config.send("#{key}=", value)
-end
+require './helpers'
 
 get '/' do
   if request.params['username']

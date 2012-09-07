@@ -1,5 +1,5 @@
 require './spec/setup'
-require './schema'
+require './model/schema'
 
 describe 'Artist::make_mbid' do
   it 'should use the MusicBrainz ID if it exists' do
