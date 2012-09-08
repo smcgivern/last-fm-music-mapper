@@ -58,7 +58,6 @@ GEM
     json (1.7.5)
     json_pure (1.7.5)
     multi_json (1.3.6)
-    nokogiri (1.5.5)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -88,6 +87,5 @@ DEPENDENCIES
   dm-sqlite-adapter
   haml
   json
-  nokogiri
   sinatra
   sinatra-contrib
