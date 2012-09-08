@@ -72,24 +72,28 @@ describe 'LastFM::Base.api_request' do
   end
 end
 
-describe 'LastFM::Base.method_missing' do
+describe 'LastFM' do
+  it 'should define API methods on classes' do
+    LastFM::User.should.satisfy {|x| x.respond_to?(:get_top_artists)}
+  end
+
+  it 'should only be define genuine API methods' do
+    lambda {LastFM::User.not_an_api_call}.should.raise(NoMethodError)
+  end
+
+  it 'should not define them for any other classes' do
+    lambda {LastFM::Artist.get_top_artists}.should.raise(NoMethodError)
+  end
+end
+
+describe 'LastFM::Base.api_request' do
   before do
     class LastFM::Test; end
 
-    class LastFM::Test::User < LastFM::Base
+    class LastFM::Test::User < LastFM::User
       def self.api_request(s); @address = s; end
       def self.last_address; @address; end
     end
-  end
-
-  it 'should raise an ArgumentError if there are no methods for the class' do
-    lambda {LastFM::Base.not_an_api_call}.should.raise(ArgumentError).
-      message.should.match(/No methods found/)
-  end
-
-  it 'should raise an ArgumentError if the method is for another class' do
-    lambda {LastFM::Artist.get_top_artists}.should.raise(ArgumentError).
-      message.should.match(/No method get_top_artists/)
   end
 
   it 'should raise an ArgumentError if a required parameter is missing' do

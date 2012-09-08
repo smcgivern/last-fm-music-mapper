@@ -104,25 +104,14 @@ module LastFM
       JSON.parse(response)
     end
 
-    def self.method_missing(method, params={})
-      klass = self.name.split('::').last.downcase
-
-      unless (klass != 'base' and methods = PARAMS[klass.to_sym])
-        raise(ArgumentError, "No methods found for class #{klass}")
-      end
-
-      unless (allowed_params = methods[method.to_sym])
-        raise(ArgumentError, "No method #{method} found for class #{klass}")
-      end
-
-      template = TEMPLATES[klass.to_sym][method.to_sym]
+    def self.build_request(method, template, allowed_params, params={})
       required_params = (allowed_params[:required] || [])
       optional_params = (allowed_params[:optional] || [])
 
       default_params = {
         :domain => api_domain,
         :path => [api_version],
-        :method => "#{klass}.#{method.to_s.gsub('_', '')}",
+        :method => method,
         :api_key => api_key,
         :format => api_format,
       }
@@ -140,6 +129,12 @@ module LastFM
 
       api_request(template.expand(default_params.merge(params)))
     end
+
+    def self.metaclass
+      class << self
+        self
+      end
+    end
   end
 
   PARAMS.each do |klass, methods|
@@ -148,20 +143,32 @@ module LastFM
     # Create class named after klass (upper-casing first letter), inheriting
     # from Base, and with no methods of its own.
     #
-    self.const_set(klass.to_s.gsub(/\b\w/){ $&.upcase }, Class.new(Base))
+    class_name = klass.to_s.gsub(/\b\w/){ $&.upcase }
+
+    const_set(class_name, Class.new(Base))
 
     TEMPLATES[klass] ||= {}
 
     methods.each do |method, params|
-      params = params.clone
+      merged_params = params.clone
 
-      PARAMS[:base].each {|t, p| params[t] = [p, params[t]].flatten.compact}
+      PARAMS[:base].each do |type, param|
+        merged_params[type] = [param, params[type]].flatten.compact
+      end
 
-      required = params[:required].map {|x| "#{x}={#{x}}"}.join('&')
-      optional = "{-join|&|#{params[:optional].join(',')}}"
+      required = merged_params[:required].map {|x| "#{x}={#{x}}"}.join('&')
+      optional = "{-join|&|#{merged_params[:optional].join(',')}}"
       template = "http://{domain}/{-suffix|/|path}?#{required}&#{optional}"
 
       TEMPLATES[klass][method] = Addressable::Template.new(template)
+
+      # Define class method, calling LastFM::Base.build_request.
+      const_get(class_name).metaclass.send(:define_method, method) do |*args|
+        build_request("#{klass}.#{method.to_s.gsub('_', '')}",
+                      TEMPLATES[klass][method],
+                      params,
+                      *args)
+      end
     end
   end
 end
