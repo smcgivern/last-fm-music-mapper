@@ -74,32 +74,29 @@ module LastFM
       recent_requests << Time.now
     end
 
-    def self.cache_to(filename)
+    def self.api_request(address)
       if cache_directory
         FileUtils.mkdir_p(cache_directory)
 
-        cache_file = File.join(cache_directory, filename)
+        cache_file = File.join(cache_directory,
+                               Digest::SHA1.hexdigest(address))
 
         if File.exist?(cache_file)
           if File.mtime(cache_file) > (Time.now - cache_for)
-            return open(cache_file).read
+            response = open(cache_file).read
           else
             File.delete(cache_file)
           end
         end
       end
 
-      block_return = yield
+      unless response
+        limit_rate
 
-      open(cache_file, 'w').puts(block_return) if cache_directory
+        response = open(address).read
 
-      block_return
-    end
-
-    def self.api_request(address)
-      limit_rate
-
-      response = cache_to(Digest::SHA1.hexdigest(address)) {open(address).read}
+        open(cache_file, 'w').puts(response) if cache_directory
+      end
 
       JSON.parse(response)
     end

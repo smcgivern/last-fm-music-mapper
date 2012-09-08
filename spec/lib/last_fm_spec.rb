@@ -1,6 +1,8 @@
 require './spec/setup'
 require './lib/last_fm'
 
+require 'tmpdir'
+
 describe 'LastFM::Config' do
   it 'should create accessor methods for all class variables' do
     LastFM::Config.should.satisfy {|x| x.respond_to?(:api_domain)}
@@ -59,9 +61,17 @@ describe 'LastFM::Base.api_request' do
     def @base.rate_limited?; @rate_limited; end
   end
 
-  it 'should call limit_rate' do
-    @base.api_request('spec/fixture/last_fm_user_get_top_artists.json')
-    @base.rate_limited?.should.be.true
+  def caching(&block)
+    dir = Dir.mktmpdir
+    @base.cache_directory = dir
+
+    begin
+      block.call(dir)
+    ensure
+      FileUtils.remove_entry_secure(dir)
+
+      @base.cache_directory = nil
+    end
   end
 
   it 'should parse the results as JSON' do
@@ -70,23 +80,26 @@ describe 'LastFM::Base.api_request' do
     json.should.satisfy {|x| x.class == Hash}
     json['topartists']['@attr']['user'].should.equal 'RJ'
   end
+
+  caching do |dir|
+    it 'should cache to a file if cache_directory is specified' do
+      @base.api_request('spec/fixture/last_fm_user_get_top_artists.json')
+
+      dir.should.satisfy {|d| Dir["#{d}/*"].length > 0}
+    end
+
+    it 'should not call limit_rate when reading from cache' do
+      @base.rate_limited?.should.be.false
+    end
+  end
+
+  it 'should call limit_rate when making a remote call' do
+    @base.api_request('spec/fixture/last_fm_user_get_top_artists.json')
+    @base.rate_limited?.should.be.true
+  end
 end
 
-describe 'LastFM' do
-  it 'should define API methods on classes' do
-    LastFM::User.should.satisfy {|x| x.respond_to?(:get_top_artists)}
-  end
-
-  it 'should only be define genuine API methods' do
-    lambda {LastFM::User.not_an_api_call}.should.raise(NoMethodError)
-  end
-
-  it 'should not define them for any other classes' do
-    lambda {LastFM::Artist.get_top_artists}.should.raise(NoMethodError)
-  end
-end
-
-describe 'LastFM::Base.api_request' do
+describe 'LastFM::Base.build_request' do
   before do
     class LastFM::Test; end
 
@@ -110,5 +123,19 @@ describe 'LastFM::Base.api_request' do
 
     address['domain'].should.equal 'localhost'
     address['user'].should.equal 'rj'
+  end
+end
+
+describe 'LastFM' do
+  it 'should define API methods on classes' do
+    LastFM::User.should.satisfy {|x| x.respond_to?(:get_top_artists)}
+  end
+
+  it 'should only be define genuine API methods' do
+    lambda {LastFM::User.not_an_api_call}.should.raise(NoMethodError)
+  end
+
+  it 'should not define them for any other classes' do
+    lambda {LastFM::Artist.get_top_artists}.should.raise(NoMethodError)
   end
 end
