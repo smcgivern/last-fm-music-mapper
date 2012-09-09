@@ -5,4 +5,8 @@ class Period
   property :name, String
 end
 
-def Period(key); Period.first_or_create(:identifier => key); end
+def Period(key)
+  return key if key.instance_of?(Period)
+
+  Period.first_or_create(:identifier => key)
+end
