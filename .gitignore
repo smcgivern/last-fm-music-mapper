@@ -1,2 +1,4 @@
 settings.json
-last_fm_music_mapper.sqlite
+*.org
+.*
+!/.gitignore
