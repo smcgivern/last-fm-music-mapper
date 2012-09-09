@@ -6,27 +6,33 @@ class User
   property :username, String, :key => true
   property :updated_at, Time
 
-  def load_artists(user_artists)
-    return if updated_at < (Time.now - 7 * 24 * 60 * 60)
+  def load_artists(api_response)
+    period = Period(api_response['topartists']['@attr']['type'])
 
-    period = user_artists['topartists']['@attr']['type']
+    if (user_artists(period).length > 0 and
+        updated_at >= (Time.now - 7 * 24 * 60 * 60))
+      return self
+    end
 
-    user_artists['topartists']['artist'].each do |a|
+    api_response['topartists']['artist'].each do |a|
       artist = Artist.first_or_create(:music_brainz_id => Artist.make_mbid(a))
 
-      next if artist.updated_at < (Time.now - 7 * 24 * 60 * 60)
-
-      image = a['image'].select {|x| x['size'] == 'medium'}.first['#text']
-
       # May as well keep these current every time.
-      artist.update(:name => a['name'], :url => a['url'], :image => image)
+      artist.name = a['name']
+      artist.url = a['url']
+      artist.image = a['image'].select {|x| x['size'] == 'medium'}[0]['#text']
+      artist.save
 
       UserArtist.first_or_create(:user => self,
                                  :artist => artist,
-                                 :period => Period(period),
+                                 :period => period,
                                  :play_count => a['playcount'])
     end
 
     reload
+  end
+
+  def user_artists(period='overall')
+    super(:period => Period(period))
   end
 end
