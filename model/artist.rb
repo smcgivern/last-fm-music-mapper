@@ -1,4 +1,4 @@
-require 'digest/sha1'
+require 'digest'
 
 class Artist
   include DataMapper::Resource
@@ -16,6 +16,6 @@ class Artist
   def self.make_mbid(artist)
     return artist['mbid'] if artist['mbid'].length > 0
 
-    "sha:#{Digest::SHA1.hexdigest(artist['name'])}"
+    "md5:#{Digest::MD5.hexdigest(artist['name'])}"
   end
 end
