@@ -40,11 +40,19 @@ module LastFM
   # corresponding Ruby class will be created with methods available as in the
   # hash.
   #
+  # Note: some methods require an artist name /or/ a MusicBrainz ID. At the
+  # moment, they're both optional here, but the request will fail if neither is
+  # supplied.
+  #
   PARAMS = {
     :base => {
       :required => [:method, :api_key, :format],
+      :optional => [],
     },
     :user => {
+      :get_info => {
+        :required => [:user],
+      },
       :get_top_artists => {
         :required => [:user],
         :optional => [:period, :limit, :page],
