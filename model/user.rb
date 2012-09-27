@@ -23,13 +23,15 @@ class User
       artist.image = a['image'].select {|x| x['size'] == 'medium'}[0]['#text']
       artist.save
 
-      UserArtist.first_or_create(:user => self,
-                                 :artist => artist,
-                                 :period => period,
-                                 :play_count => a['playcount'])
+      user_artist = UserArtist.first_or_create(:user => self,
+                                               :artist => artist,
+                                               :period => period)
+
+      user_artist.play_count = a['playcount']
+      user_artist.save
     end
 
-    reload
+    self
   end
 
   def user_artists(period='overall')
