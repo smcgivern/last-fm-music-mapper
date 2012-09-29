@@ -30,11 +30,15 @@ module MusicMapper
     api_response ||= LastFM::Artist.get_top_tags(:artist => artist)
 
     (api_response['toptags']['tag'] || []).each do |t|
-      countries << tag_to_countries(t['name'])
+      if t['count'].to_i > 0
+        countries << tag_to_countries(t['name'])
+      end
     end
 
+    countries = countries.uniq.flatten.sort_by {|c| c[:name]}
+
     ARTISTS[artist] ||= {}
-    ARTISTS[artist][:countries] = countries.uniq.flatten
+    ARTISTS[artist][:countries] = countries
   end
 
   def self.user_artists(username, period='7day', limit=10_000, api_response=nil)
@@ -59,7 +63,7 @@ module MusicMapper
       user_artists << {
         :name => a['name'],
         :playcount => a['playcount'].to_i,
-      }
+      }.merge(ARTISTS[artist])
     end
 
     USERS[username] ||= {}

@@ -19,8 +19,8 @@ describe 'MusicMapper.tag_to_countries' do
     iso_codes('United Kingdom').should.equal ['GBR']
   end
 
-  it 'should return multiple results if more than one match is found' do
-    iso_codes('Congolese').sort.should.equal ['COD', 'COG']
+  it 'should return multiple, sorted results if more than one match is found' do
+    iso_codes('Congolese').should.equal ['COG', 'COD']
   end
 
   it 'should be case-insensitive' do
@@ -36,18 +36,23 @@ end
 describe 'MusicMapper.artist_countries' do
   before do
     @cher = api_response('last_fm_artist_get_top_tags.json')
-    @madonna = api_response('last_fm_artist_get_top_tags_madonna.json')
+    @kylie = api_response('last_fm_artist_get_top_tags_kylie_minogue.json')
   end
 
   it 'should return an array of all artist countries' do
-    MusicMapper.artist_countries('Madonna', @madonna).map(&ISO3).
+    MusicMapper.artist_countries('Kylie Minogue', @kylie).map(&ISO3).
+      should.equal ['AUS']
+  end
+
+  it 'should only count tags with a count greater than zero' do
+    MusicMapper.artist_countries('Cher', @cher).map(&ISO3).
       should.equal ['USA']
   end
 
   it 'should memoize in the ARTISTS hash' do
     originals = MusicMapper.artist_countries('Cher', @cher).map(&ISO3)
 
-    MusicMapper.artist_countries('Cher', @madonna).map(&ISO3).
+    MusicMapper.artist_countries('Cher', @kylie).map(&ISO3).
       should.equal originals
   end
 end
