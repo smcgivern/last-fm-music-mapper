@@ -10,9 +10,16 @@
             %img{:src => artist[:image], :width => 64}
               %a{:href => artist[:url]}
                 = h(artist[:name])
-          %p.playcount
+          %p
             Plays:
-            = h(artist[:playcount])
-          %p.countries
+            %span.playcount
+              = h(artist[:playcount])
+          %p
             From:
-            = sentence_join(country_names(artist[:countries]))
+            - if artist[:countries].length > 0
+              = sentence_join(country_names(artist[:countries]))
+            - else
+              nowhere?
+              = surround '(', ')' do
+                %a{:href => "#{artist[:url]}/+tags",
+                   :title => "Tags for #{artist[:name]}"} Add a tag!
