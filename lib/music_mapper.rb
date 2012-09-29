@@ -14,6 +14,25 @@ module MusicMapper
              {:identifier => 'overall', :name => 'Overall'},
             ]
 
+  def self.hash_keys_to_symbols(obj)
+    case obj
+    when Hash
+      obj.inject({}) {|new, (k, v)| new[k.to_sym] = hash_keys_to_symbols(v); new}
+    else
+      obj
+    end
+  end
+
+  def self.artists_from_cache(file)
+    hash_keys_to_symbols(JSON.parse(open(file).read)).each do |key, value|
+      ARTISTS[key] = value
+    end
+  end
+
+  def self.artists_to_cache(file)
+    open(file, 'w').puts(ARTISTS.to_json)
+  end
+
   def self.tag_to_countries(tag)
     COUNTRIES.select do |country|
       (country[:name].downcase == tag.downcase ||

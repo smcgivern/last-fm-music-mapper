@@ -2,5 +2,8 @@
     "last_fm": {
         "api_key": "foobarbazquux",
         "cache_directory": "tmp/cache/"
+    },
+    "artists": {
+        "cache_file": "tmp/artists.json"
     }
 }

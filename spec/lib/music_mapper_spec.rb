@@ -5,6 +5,18 @@ ISO3 = lambda {|x| x[:iso_3]}
 
 def api_response(f); JSON.parse(open("./spec/fixture/#{f}").read); end
 
+describe 'MusicMapper.hash_keys_to_symbols' do
+  it 'should return a hash where string keys are now symbols' do
+    MusicMapper.hash_keys_to_symbols({'foo' => 'bar'}).
+      should.equal({:foo => 'bar'})
+  end
+
+  it 'should work recursively' do
+    MusicMapper.hash_keys_to_symbols({'foo' => {'bar' => {'baz' => 'quux'}}}).
+      should.equal({:foo => {:bar => {:baz => 'quux'}}})
+  end
+end
+
 describe 'MusicMapper.tag_to_countries' do
   def iso_codes(tag)
     MusicMapper.tag_to_countries(tag).map(&ISO3)
