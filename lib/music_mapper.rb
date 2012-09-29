@@ -1,0 +1,68 @@
+require './lib/last_fm'
+require './lib/music_mapper/countries'
+
+module MusicMapper
+  USERS = {}
+  ARTISTS = {}
+
+  PERIODS = [
+             {:identifier => '7day', :name => 'Last 7 days'},
+             {:identifier => '1month', :name => 'Last month'},
+             {:identifier => '3month', :name => 'Last 3 months'},
+             {:identifier => '6month', :name => 'Last 6 months'},
+             {:identifier => '12month', :name => 'Last 12 months'},
+             {:identifier => 'overall', :name => 'Overall'},
+            ]
+
+  def self.tag_to_countries(tag)
+    COUNTRIES.select do |country|
+      (country[:name].downcase == tag.downcase ||
+       country[:adjectives].map {|a| a.downcase}.include?(tag.downcase))
+    end
+  end
+
+  def self.artist_countries(artist, api_response=nil)
+    if ARTISTS[artist] && ARTISTS[artist][:countries]
+      return ARTISTS[artist][:countries]
+    end
+
+    countries = []
+    api_response ||= LastFM::Artist.get_top_tags(:artist => artist)
+
+    (api_response['toptags']['tag'] || []).each do |t|
+      countries << tag_to_countries(t['name'])
+    end
+
+    ARTISTS[artist] ||= {}
+    ARTISTS[artist][:countries] = countries.uniq.flatten
+  end
+
+  def self.user_artists(username, period='7day', limit=10_000, api_response=nil)
+    if USERS[username] && USERS[username][period]
+      return USERS[username][period]
+    end
+
+    user_artists = []
+    api_response ||= LastFM::User.get_top_artists(:user => username,
+                                                :period => period,
+                                                :limit => limit)
+
+    (api_response['topartists']['artist'] || []).each do |a|
+      artist = a['name']
+      image = a['image'].select {|x| x['size'] == 'medium'}[0]['#text']
+
+      ARTISTS[artist] ||= {}
+      ARTISTS[artist][:url] = a['url']
+      ARTISTS[artist][:image] = image
+      ARTISTS[artist][:countries] ||= artist_countries(artist)
+
+      user_artists << {
+        :name => a['name'],
+        :playcount => a['playcount'].to_i,
+      }
+    end
+
+    USERS[username] ||= {}
+    USERS[username][period] = user_artists
+  end
+end

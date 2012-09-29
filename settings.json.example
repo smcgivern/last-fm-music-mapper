@@ -1,7 +1,4 @@
 {
-    "database": {
-        "url": "sqlite::memory:"
-    },
     "last_fm": {
         "api_key": "foobarbazquux",
         "cache_directory": "tmp/cache/"
