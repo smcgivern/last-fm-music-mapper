@@ -95,7 +95,14 @@ describe 'MusicMapper.user_artists' do
   end
 
   it 'should use the medium-sized artist image' do
+    user_artists('overall', @overall)
+
     MusicMapper::ARTISTS['Dream Theater'][:image].
+      should.equal 'http://userserve-ak.last.fm/serve/64/5623420.jpg'
+  end
+
+  it 'should include artist info in the return value' do
+    user_artists('overall', @overall).first[:image].
       should.equal 'http://userserve-ak.last.fm/serve/64/5623420.jpg'
   end
 end
