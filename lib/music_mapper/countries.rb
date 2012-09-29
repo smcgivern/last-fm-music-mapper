@@ -1408,7 +1408,8 @@ module MusicMapper
        :name => 'United Kingdom',
        :iso_2 => 'GB',
        :iso_3 => 'GBR',
-       :adjectives => ['British'],
+       :adjectives => ['British', 'Scottish', 'Welsh', 'Northern Irish',
+                       'English'],
      },
      {
        :name => 'United States',
