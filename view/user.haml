@@ -3,6 +3,16 @@
   %head
     %title Last.fm music mapper
   %body
-    %p
-      %code
-        = h(@user.inspect)
+    %ol
+      - @user_artists.sort_by {|a| -a[:playcount]}.each do |artist|
+        %li{:class => country_classes(artist[:countries])}
+          %h3
+            %img{:src => artist[:image], :width => 64}
+              %a{:href => artist[:url]}
+                = h(artist[:name])
+          %p.playcount
+            Plays:
+            = h(artist[:playcount])
+          %p.countries
+            From:
+            = sentence_join(country_names(artist[:countries]))

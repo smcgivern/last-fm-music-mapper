@@ -13,13 +13,8 @@ get '/' do
 end
 
 get '/::username/?' do
-  @user = User.first_or_create(:username => params['username'])
-
-  user_artists = LastFM::User.get_top_artists(:user => @user.username,
-                                              :period => '7day',
-                                              :limit => 10_000)
-
-  @user.load_artists(user_artists)
+  @user_artists = MusicMapper.user_artists(params['username'],
+                                           '7day')
 
   haml :user
 end
