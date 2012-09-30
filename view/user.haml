@@ -5,6 +5,8 @@
     %link{:href => '/ext/style.css', :rel => 'stylesheet',
           :type => 'text/css'}
   %body
+    %object#map{:data => '/ext/world.svg', :width => '100%',
+                :type => 'image/svg+xml'}
     %ol#artists
       - @user_artists.sort_by {|a| -a[:playcount]}.each do |artist|
         %li{:class => country_classes(artist[:countries])}
