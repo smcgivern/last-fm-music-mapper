@@ -12,7 +12,7 @@ body, input {
 body {
     margin: 0em auto;
     padding: 0em 1em;
-
+    max-width: 50em;
     line-height: 2em;
 }
 
@@ -38,39 +38,44 @@ img {
     border-style: none;
 }
 
-ol.artists {
+#artists {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
 
-ol.artists li {
+#artists li {
     float: left;
     margin: 0.2em;
-    border: 1px solid red;
-    width: 15em;
+    padding: 0.1em;
+    width: 16em;
     display: inline-block;
+    color: inherit;
+    background: #eee;
+    font-size: 90%;
 }
 
-ol.artists img {
+#artists img {
     float: right;
-    padding-left: 0.1em;
+    padding: 0 0 0.1em 0.1em;
 }
 
-ol.artists h3, ol.artists p {
+#artists h3, #artists p {
     margin: 0;
     padding: 0;
     line-height: 120%;
-    clear: right;
-
+    text-align: left;
 }
 
-input#go {
-    color: #fff;
-    background: #22bd0d;
+.country-name {
+    font-style: normal;
+    background: #ccc;
 }
 
-
+.error {
+    font-weight: bold;
+    color: #8b0000;
+}
 
 #byline {
     clear: both;

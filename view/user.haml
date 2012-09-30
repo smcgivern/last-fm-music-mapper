@@ -5,13 +5,14 @@
     %link{:href => '/ext/style.css', :rel => 'stylesheet',
           :type => 'text/css'}
   %body
-    %ol.artists
+    %ol#artists
       - @user_artists.sort_by {|a| -a[:playcount]}.each do |artist|
         %li{:class => country_classes(artist[:countries])}
           %h3
-            %img{:src => artist[:image], :width => 64}
-              %a{:href => artist[:url]}
-                = h(artist[:name])
+            %a{:href => artist[:url]}
+              %img{:src => artist[:image], :width => 64}
+            %a{:href => artist[:url]}
+              = h(artist[:name])
           %p
             Plays:
             %span.playcount
@@ -21,7 +22,8 @@
             - if artist[:countries].length > 0
               = sentence_join(country_names(artist[:countries]))
             - else
-              nowhere?
+              = succeed '?' do
+                %span.country-name.error nowhere
               = surround '(', ')' do
                 %a{:href => "#{artist[:url]}/+tags",
                    :title => "Tags for #{artist[:name]}"} Add a tag!
