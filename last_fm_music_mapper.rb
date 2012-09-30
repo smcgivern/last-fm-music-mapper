@@ -18,8 +18,7 @@ get '/ext/style.css' do
 end
 
 get '/::username/?' do
-  @user_artists = MusicMapper.user_artists(params['username'],
-                                           '7day')
+  @user_artists = MusicMapper.user_artists(params['username'], '7day')
 
   haml :user
 end
