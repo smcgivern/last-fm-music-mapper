@@ -2,8 +2,10 @@
 %html
   %head
     %title Last.fm music mapper
+    %link{:href => '/ext/style.css', :rel => 'stylesheet',
+          :type => 'text/css'}
   %body
-    %ol
+    %ol.artists
       - @user_artists.sort_by {|a| -a[:playcount]}.each do |artist|
         %li{:class => country_classes(artist[:countries])}
           %h3
@@ -23,3 +25,7 @@
               = surround '(', ')' do
                 %a{:href => "#{artist[:url]}/+tags",
                    :title => "Tags for #{artist[:name]}"} Add a tag!
+    %div#byline
+      %p
+        By
+        %a{:href => 'http://sean.mcgivern.me.uk/'} Sean McGivern

@@ -1,4 +1,5 @@
 require 'haml'
+require 'sass'
 require 'sinatra'
 require 'sinatra/reloader'
 
@@ -10,6 +11,10 @@ get '/' do
   end
 
   haml :index
+end
+
+get '/ext/style.css' do
+  scss :style
 end
 
 get '/::username/?' do

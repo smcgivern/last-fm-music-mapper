@@ -1,0 +1,80 @@
+$body-font: "Palatino Linotype", "Palatino", "URW Palladio L", "Book Antiqua", "Baskerville", "Bitstream Charter", "Garamond", "Georgia", serif;
+
+$header-font: "Gill Sans", "Gill Sans MT", "GillSans", "Calibri", "Trebuchet MS", sans-serif;
+
+body, input {
+    font-family: $body-font;
+    font-size: 105%;
+    color: #000;
+    background: #fff;
+}
+
+body {
+    margin: 0em auto;
+    padding: 0em 1em;
+
+    line-height: 2em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $header-font;
+    text-align: center;
+    clear: both;
+}
+
+:link, :link:active, :link:hover, .click {
+    color: #0000ff;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+:link:visited {
+    color: #800080;
+    background: transparent;
+}
+
+img {
+    border-style: none;
+}
+
+ol.artists {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ol.artists li {
+    float: left;
+    margin: 0.2em;
+    border: 1px solid red;
+    width: 15em;
+    display: inline-block;
+}
+
+ol.artists img {
+    float: right;
+    padding-left: 0.1em;
+}
+
+ol.artists h3, ol.artists p {
+    margin: 0;
+    padding: 0;
+    line-height: 120%;
+    clear: right;
+
+}
+
+input#go {
+    color: #fff;
+    background: #22bd0d;
+}
+
+
+
+#byline {
+    clear: both;
+    text-align: right;
+    font-size: 75%;
+    font-style: italic;
+}
