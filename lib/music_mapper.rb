@@ -14,12 +14,12 @@ module MusicMapper
              {:identifier => 'overall', :name => 'Overall'},
             ]
 
-  def self.hash_keys_to_symbols(obj)
-    case obj
+  def self.hash_keys_to_symbols(object)
+    case object
     when Hash
-      obj.inject({}) {|new, (k, v)| new[k.to_sym] = hash_keys_to_symbols(v); new}
+      object.inject({}) {|h, (k, v)| h[k.to_sym] = hash_keys_to_symbols(v); h}
     else
-      obj
+      object
     end
   end
 
@@ -30,7 +30,12 @@ module MusicMapper
   end
 
   def self.artists_to_cache(file)
-    open(file, 'w').puts(ARTISTS.to_json)
+    cache = ARTISTS.inject({}) do |hash, (key, value)|
+      hash[key] = value unless value[:countries].empty?
+      hash
+    end
+
+    open(file, 'w').puts(cache.to_json)
   end
 
   def self.tag_to_countries(tag)
