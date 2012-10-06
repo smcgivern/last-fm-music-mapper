@@ -1,5 +1,6 @@
 require './lib/last_fm'
 require './lib/music_mapper/countries'
+require 'rvg/rvg'
 
 module MusicMapper
   USERS = {}
@@ -116,5 +117,39 @@ module MusicMapper
         :playcount => group.last.map {|a| a[:playcount]}.inject(0, :+),
       }.merge(country)
     end.sort_by {|c| c[:playcount]}.reverse
+  end
+
+  def self.generate_flag_list(groups, output)
+    height = 30
+
+    styles = {
+      :font_size => 16, :font_family => 'DejaVu Sans Condensed',
+      :font_style => 'normal', :font_weight => 'bold',
+    }
+
+    Magick::RVG.new(300, 480) do |canvas|
+      canvas.background_fill = '#eee'
+
+      canvas.g do |body|
+        groups[0..29].each_with_index do |group, i|
+          x = (i % 2) * 150
+          y = (i / 2) * (height + 2)
+
+          if (i % 2 == 0) and ((i / 2) % 2 == 0)
+            body.rect(300, height + 1, 0, y).styles(:fill => '#ddd')
+          end
+
+          flag = "./lib/music_mapper/flag/#{group[:iso_2].downcase}.svg"
+
+          body.image(Magick::Image.read(flag).first, 40, height, x + 62, y + 1)
+
+          body.text(x + 104, y + 22, group[:iso_3]).
+            styles(styles)
+
+          body.text(x + 60, y + 22, thousands(group[:playcount])).
+            styles(styles.merge(:text_anchor => 'end'))
+        end
+      end
+    end.draw.write(output)
   end
 end
