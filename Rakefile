@@ -1,3 +1,5 @@
+Dir['*.rake'].each {|t| load(t)}
+
 desc 'Run all specs in spec/'
 task :spec do
   require 'bacon'
