@@ -14,6 +14,8 @@ module MusicMapper
              {:identifier => 'overall', :name => 'Overall'},
             ]
 
+  def self.thousands(s); s.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1,"); end
+
   def self.hash_keys_to_symbols(object)
     case object
     when Hash

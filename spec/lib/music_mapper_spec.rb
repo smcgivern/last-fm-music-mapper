@@ -5,6 +5,16 @@ ISO3 = lambda {|x| x[:iso_3]}
 
 def api_response(f); JSON.parse(open("./spec/fixture/#{f}").read); end
 
+describe 'MusicMapper.thousands' do
+  it 'should add a thousands separator to numbers' do
+    MusicMapper.thousands(2000).should.equal '2,000'
+  end
+
+  it 'should not add when there are fewer than three digits' do
+    MusicMapper.thousands(200).should.equal '200'
+  end
+end
+
 describe 'MusicMapper.hash_keys_to_symbols' do
   it 'should return a hash where string keys are now symbols' do
     MusicMapper.hash_keys_to_symbols({'foo' => 'bar'}).
