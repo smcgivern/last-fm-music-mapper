@@ -103,6 +103,8 @@ module LastFM
 
         response = open(address).read
 
+        raise(Exception, response['message']) if response['error']
+
         open(cache_file, 'w').puts(response) if cache_directory
       end
 
