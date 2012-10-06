@@ -63,9 +63,7 @@
   </metadata>
   <defs
      id="defs550">
-    <clipPath
-       id="clipPath8578"
-       clipPathUnits="userSpaceOnUse">
+    
       <rect
          y="-15.957393"
          width="512"
@@ -73,10 +71,8 @@
          x="0"
          height="512"
          id="rect8580" />
-    </clipPath>
-    <clipPath
-       id="clipPath9289"
-       clipPathUnits="userSpaceOnUse">
+    
+    
       <rect
          y="0"
          width="512"
@@ -84,7 +80,7 @@
          x="0"
          height="512"
          id="rect9291" />
-    </clipPath>
+    
   </defs>
   <g
      id="flag"

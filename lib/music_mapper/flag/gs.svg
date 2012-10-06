@@ -118,9 +118,7 @@
        y2="147.34778"
        gradientTransform="matrix(0.559036,0,0,1.760734,40.5128,0.00610687)"
        gradientUnits="userSpaceOnUse" />
-    <clipPath
-       id="clipPath5603"
-       clipPathUnits="userSpaceOnUse">
+    
       <rect
          y="0"
          width="512"
@@ -128,7 +126,7 @@
          x="0"
          height="512"
          id="rect5605" />
-    </clipPath>
+    
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient783"

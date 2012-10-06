@@ -89,9 +89,7 @@ methods that have not yet been invented or conceived.
   </metadata>
   <defs
      id="defs3">
-    <clipPath
-       clipPathUnits="userSpaceOnUse"
-       id="clipPath4599">
+    
       <rect
          style="fill:#808080;fill-opacity:1;stroke:none"
          id="rect4601"
@@ -99,11 +97,10 @@ methods that have not yet been invented or conceived.
          height="512"
          x="0"
          y="0" />
-    </clipPath>
+    
   </defs>
   <g
      id="flag"
-     clip-path="url(#clipPath4599)"
      inkscape:label="#g4593"
      transform="matrix(1.3333333,0,0,1,-85.333333,1.5258789e-5)">
     <rect

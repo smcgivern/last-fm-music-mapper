@@ -69,9 +69,7 @@ The United States of America flag, produced by Daniel McRae</desc>
        id="defs7607" />
     <sodipodi:namedview
        id="namedview37589" />
-    <clipPath
-       id="clipPath57965"
-       clipPathUnits="userSpaceOnUse">
+    
       <rect
          y="80.338432"
          width="364.86728"
@@ -79,10 +77,8 @@ The United States of America flag, produced by Daniel McRae</desc>
          x="83.689262"
          height="364.86728"
          id="rect57967" />
-    </clipPath>
-    <clipPath
-       clipPathUnits="userSpaceOnUse"
-       id="clipPath64086">
+    
+    
       <rect
          id="rect64088"
          height="718.46405"
@@ -90,12 +86,11 @@ The United States of America flag, produced by Daniel McRae</desc>
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="957.95203"
          y="-115.23203" />
-    </clipPath>
+    
   </defs>
   <g
      transform="matrix(0.66809189,0,0,0.66809189,148.68276,76.985586)"
      id="flag"
-     clip-path="url(#clipPath64086)"
      inkscape:label="#g43718">
     <rect
        style="font-size:12px;fill:#00319c;fill-rule:evenodd;stroke-width:1pt"

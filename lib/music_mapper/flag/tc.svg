@@ -77,9 +77,7 @@
          id="path10"
          d="M 10,0 L 0,5 L 10,10 L 10,0 z " />
     </marker>
-    <clipPath
-       id="clipPath3680"
-       clipPathUnits="userSpaceOnUse">
+    
       <rect
          y="0"
          width="512"
@@ -87,7 +85,7 @@
          x="0"
          height="512"
          id="rect3682" />
-    </clipPath>
+    
   </defs>
   <g
      id="flag"

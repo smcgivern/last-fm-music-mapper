@@ -41,9 +41,7 @@
   </metadata>
   <defs
      id="defs550">
-    <clipPath
-       id="clipPath6582"
-       clipPathUnits="userSpaceOnUse">
+    
       <rect
          y="0.00040000028"
          width="496.06259"
@@ -51,7 +49,7 @@
          x="81.385269"
          height="496.06259"
          id="rect6584" />
-    </clipPath>
+    
   </defs>
   <g
      transform="matrix(0.94086678,0,0,0.9375,80.17789,0)"
