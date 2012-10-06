@@ -70,11 +70,16 @@ img {
 .country-name {
     font-style: normal;
     background: #ccc;
+    cursor: pointer;
 }
 
 .error {
     font-weight: bold;
     color: #8b0000;
+}
+
+#artists li.highlight {
+    background: #d8d8d8;
 }
 
 #byline {
