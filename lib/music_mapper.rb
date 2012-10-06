@@ -142,7 +142,7 @@ module MusicMapper
 
   def self.generate_flag_list(groups, output)
     height = 30
-    rows = groups.length / 2
+    rows = groups[0..29].length / 2
 
     styles = {
       :font_size => 16, :font_family => 'DejaVu Sans Condensed',
