@@ -10,7 +10,9 @@ if SETTINGS['last_fm']
 end
 
 if SETTINGS['artist'] && SETTINGS['artist']['cache_file']
-  MusicMapper.artists_from_cache(SETTINGS['artist']['cache_file'])
+  if File.exist?(SETTINGS['artist']['cache_file'])
+    MusicMapper.artists_from_cache(SETTINGS['artist']['cache_file'])
+  end
 
   at_exit do
     MusicMapper.artists_to_cache(SETTINGS['artist']['cache_file'])
