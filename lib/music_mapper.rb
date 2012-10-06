@@ -119,6 +119,25 @@ module MusicMapper
     end.sort_by {|c| c[:playcount]}.reverse
   end
 
+  def self.flag_list(username, period, cache_directory, cache_for)
+    cache_directory = File.join('public', cache_directory, username)
+
+    FileUtils.mkdir_p(cache_directory)
+
+    filename = File.join(cache_directory, "#{period}.png")
+
+    if File.exist?(filename)
+      if File.mtime(filename) > (Time.now - cache_for)
+        return filename
+      else
+        File.delete(filename)
+      end
+    end
+
+    generate_flag_list(group_by_country(user_artists(username, period)),
+                       filename)
+  end
+
   def self.generate_flag_list(groups, output)
     height = 30
 
