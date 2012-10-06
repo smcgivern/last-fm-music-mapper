@@ -140,13 +140,14 @@ module MusicMapper
 
   def self.generate_flag_list(groups, output)
     height = 30
+    rows = groups.length / 2
 
     styles = {
       :font_size => 16, :font_family => 'DejaVu Sans Condensed',
       :font_style => 'normal', :font_weight => 'bold',
     }
 
-    Magick::RVG.new(300, 480) do |canvas|
+    Magick::RVG.new(300, (height + 2) * rows) do |canvas|
       canvas.background_fill = '#eee'
 
       canvas.g do |body|
