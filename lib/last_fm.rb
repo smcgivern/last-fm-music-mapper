@@ -105,7 +105,11 @@ module LastFM
 
         raise(Exception, response['message']) if response['error']
 
-        open(cache_file, 'w').puts(response) if cache_directory
+        if cache_directory
+          file = open(cache_file, 'w')
+          file.puts(response)
+          file.close
+        end
       end
 
       JSON.parse(response)

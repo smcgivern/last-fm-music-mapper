@@ -40,7 +40,9 @@ module MusicMapper
       hash
     end
 
-    open(file, 'w').puts(cache.to_json)
+    file = open(file, 'w')
+    file.puts(cache.to_json)
+    file.close
   end
 
   def self.tag_to_countries(tag)
