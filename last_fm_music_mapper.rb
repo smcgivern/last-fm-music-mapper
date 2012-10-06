@@ -7,8 +7,8 @@ require 'sinatra/reloader'
 require './helpers'
 
 get '/' do
-  if request.params['username']
-    return redirect("/:#{request.params['username']}/")
+  if (username = params['username']) && (username.length > 0)
+    return redirect(r("/:#{username}/#{params['period']}/"))
   end
 
   @page_title = 'Last.fm music mapper'
@@ -16,8 +16,9 @@ get '/' do
   haml :index
 end
 
-get '/ext/style.css' do
-  scss :style
+get '/::username/?' do
+  period = MusicMapper::PERIODS.first[:identifier]
+  redirect(r("/:#{params['username']}/#{period}/"))
 end
 
 get '/::username/:period/?' do
@@ -42,4 +43,8 @@ get '/::username/:period/?' do
   @self = r("/:#{@username}/#{@period[:identifier]}/")
 
   haml :user
+end
+
+get '/ext/style.css' do
+  scss :style
 end
