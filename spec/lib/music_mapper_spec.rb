@@ -15,6 +15,11 @@ describe 'MusicMapper.hash_keys_to_symbols' do
     MusicMapper.hash_keys_to_symbols({'foo' => {'bar' => {'baz' => 'quux'}}}).
       should.equal({:foo => {:bar => {:baz => 'quux'}}})
   end
+
+  it 'should convert hashes inside arrays' do
+    MusicMapper.hash_keys_to_symbols([{'foo' => 'bar'}, {'baz' => 'quux'}]).
+      should.equal [{:foo => 'bar'}, {:baz => 'quux'}]
+  end
 end
 
 describe 'MusicMapper.tag_to_countries' do

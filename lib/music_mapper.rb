@@ -18,6 +18,8 @@ module MusicMapper
     case object
     when Hash
       object.inject({}) {|h, (k, v)| h[k.to_sym] = hash_keys_to_symbols(v); h}
+    when Array
+      object.map {|x| hash_keys_to_symbols(x)}
     else
       object
     end
