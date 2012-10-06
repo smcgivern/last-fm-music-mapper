@@ -9,10 +9,10 @@ if SETTINGS['last_fm']
   SETTINGS['last_fm'].each {|k, v| LastFM::Config.send("#{k}=", v)}
 end
 
-if SETTINGS['artists'] && SETTINGS['artists']['cache_file']
-  MusicMapper.artists_from_cache(SETTINGS['artists']['cache_file'])
+if SETTINGS['artist'] && SETTINGS['artist']['cache_file']
+  MusicMapper.artists_from_cache(SETTINGS['artist']['cache_file'])
 
   at_exit do
-    MusicMapper.artists_to_cache(SETTINGS['artists']['cache_file'])
+    MusicMapper.artists_to_cache(SETTINGS['artist']['cache_file'])
   end
 end
