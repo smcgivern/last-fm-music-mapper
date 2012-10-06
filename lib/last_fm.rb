@@ -91,7 +91,7 @@ module LastFM
 
         if File.exist?(cache_file)
           if File.mtime(cache_file) > (Time.now - cache_for)
-            response = open(cache_file).read
+            response = JSON.parse(open(cache_file).read)
           else
             File.delete(cache_file)
           end
@@ -101,18 +101,18 @@ module LastFM
       unless response
         limit_rate
 
-        response = open(address).read
+        response = JSON.parse(open(address).read)
 
         raise(Exception, response['message']) if response['error']
 
         if cache_directory
           file = open(cache_file, 'w')
-          file.puts(response)
+          file.puts(response.to_json)
           file.close
         end
       end
 
-      JSON.parse(response)
+      response
     end
 
     def self.build_request(method, template, allowed_params, params={})
