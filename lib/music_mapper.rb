@@ -93,6 +93,6 @@ module MusicMapper
     end
 
     USERS[username] ||= {}
-    USERS[username][period] = user_artists
+    USERS[username][period] = user_artists.sort_by {|a| a[:playcount]}.reverse
   end
 end

@@ -132,4 +132,10 @@ describe 'MusicMapper.user_artists' do
     user_artists('overall', @overall).first[:image].
       should.equal 'http://userserve-ak.last.fm/serve/64/5623420.jpg'
   end
+
+  it 'should sort artists from highest to lowest playcount' do
+    playcounts = user_artists('overall', @overall).map {|c| c[:playcount]}
+
+    playcounts.should.equal playcounts.sort.reverse
+  end
 end
