@@ -139,3 +139,38 @@ describe 'MusicMapper.user_artists' do
     playcounts.should.equal playcounts.sort.reverse
   end
 end
+
+describe 'MusicMapper.group_by_country' do
+  before do
+    @user_artists = api_response('user_artists.json').map do |artist|
+      MusicMapper.hash_keys_to_symbols(artist)
+    end
+
+    @grouped_by_country = MusicMapper.group_by_country(@user_artists)
+  end
+
+  it 'should collect user artists by country' do
+    @grouped_by_country.map(&ISO3).sort[0..4].
+      should.equal ['AUS', 'CAN', 'DEU', 'GBR', 'ITA']
+  end
+
+  it 'should calculate the playcount by country' do
+    @grouped_by_country.select {|c| c[:iso_3] == 'USA'}.first[:playcount].
+      should.equal 35
+  end
+
+  it 'should put artists in every country they belong to' do
+    @grouped_by_country.select do |country|
+      country[:artists].select {|a| a[:name] == 'Grace Jones'}.length > 0
+    end.
+      map(&ISO3).
+      sort.
+      should.equal ['JAM', 'USA']
+  end
+
+  it 'should sort countries from highest to lowest playcount' do
+    playcounts = @grouped_by_country.map {|c| c[:playcount]}
+
+    playcounts.should.equal playcounts.sort.reverse
+  end
+end

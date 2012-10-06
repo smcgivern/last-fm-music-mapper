@@ -95,4 +95,24 @@ module MusicMapper
     USERS[username] ||= {}
     USERS[username][period] = user_artists.sort_by {|a| a[:playcount]}.reverse
   end
+
+  def self.group_by_country(artists)
+    groups = {}
+
+    artists.each do |artist|
+      artist[:countries].each do |country|
+        groups[country[:iso_3]] ||= []
+        groups[country[:iso_3]] << artist
+      end
+    end
+
+    groups.sort.map do |group|
+      country = COUNTRIES.select {|c| c[:iso_3] === group.first}.first
+
+      {
+        :artists => group.last,
+        :playcount => group.last.map {|a| a[:playcount]}.inject(0, :+),
+      }.merge(country)
+    end.sort_by {|c| c[:playcount]}.reverse
+  end
 end
