@@ -3,6 +3,10 @@
         "api_key": "foobarbazquux",
         "cache_directory": "tmp/cache/"
     },
+    "image": {
+        "cache_directory": "image",
+        "cache_for": 604800
+    },
     "artist": {
         "cache_file": "tmp/artists.json"
     }
