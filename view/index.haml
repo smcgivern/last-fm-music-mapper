@@ -1,9 +1,35 @@
-!!!
-%html
-  %head
-    %title Last.fm music mapper
-  %body
-    %form{:action => '/'}
-      %p
-        Your Last.fm username is:
-        %input{:type => 'text', :name => 'username', :id => 'username'}
+%h1= @page_title
+%form{:action => '/'}
+  %p
+    You want a music map for the
+    %select{:name => 'period', :id => 'period'}
+      - MusicMapper::PERIODS.each do |period|
+        %option{:value => period[:identifier]}= period[:name].downcase
+    for Last.fm username
+    %input{:type => 'text', :name => 'username', :id => 'username', :size => 10,
+           :value => 'smcgivern', :onfocus => "this.value = ''"}
+    —
+    %input.go{:type => 'submit', :value => 'create it!'}
+:kramdown
+  This is a tool I made for [my own profile](http://last.fm/user/smcgivern) to
+  see how much music I listened to by country. To try it out, fill in the fields
+  above. If you put the picture in your profile, it will automatically update
+  every week or so. There are some caveats:
+
+  1. The [Last.fm API](http://last.fm/api) has a speed limit on it of 5 requests
+     per second. Each music map needs one request for the initial list of
+     artists, and then _another_ request for every single artist to find out
+     where they're from. I get around it by storing the responses, so it
+     shouldn't be that slow in general, but please bear that in mind.
+
+  2. Last.fm don't store an artist's country, but they do let people
+     [tag](https://en.wikipedia.org/wiki/Tag_(metadata)) songs. This tool uses
+     those tags to guess where an artist is from, but sometimes they'll be
+     missing or wrong.
+
+  3. They make me include this button, to show that it's powered by Last.fm:
+     <a href="http://last.fm/"><img src="#{r('/image/lastfm.gif')}" width="80"
+     height="28" alt="Last.fm logo" style="vertical-align:text-top;"></a>
+
+  4. Not a caveat, but the source is [available on
+     GitHub](https://github.com/smcgivern/last-fm-music-mapper).

@@ -2,18 +2,22 @@ $body-font: "Palatino Linotype", "Palatino", "URW Palladio L", "Book Antiqua", "
 
 $header-font: "Gill Sans", "Gill Sans MT", "GillSans", "Calibri", "Trebuchet MS", sans-serif;
 
-body, input {
+body, input, select {
     font-family: $body-font;
-    font-size: 105%;
     color: #000;
     background: #fff;
 }
 
 body {
+    font-size: 105%;
     margin: 0em auto;
     padding: 0em 1em;
     max-width: 50em;
     line-height: 2em;
+}
+
+input, select {
+    font-size: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -76,6 +80,11 @@ img {
 .error {
     font-weight: bold;
     color: #8b0000;
+}
+
+.go {
+    color: #fff;
+    background: #22bd0d;
 }
 
 code {
