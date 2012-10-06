@@ -17,9 +17,11 @@ helpers do
 
   # URL relative to root as defined in SETTINGS['root'].
   def r(s)
-    return s unless (s =~ /^\// && !(s =~ /^\/#{SETTINGS['root']}/))
-
-    "/#{SETTINGS['root']}#{s}"
+    if (s =~ /^\// && !(s =~ /^\/#{SETTINGS['root']}/))
+      "/#{SETTINGS['root']}#{s}"
+    else
+      s
+    end
   end
 
   # Absolute URL to s.
