@@ -151,5 +151,7 @@ module MusicMapper
         end
       end
     end.draw.write(output)
+
+    output
   end
 end
