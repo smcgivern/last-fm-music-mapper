@@ -72,8 +72,8 @@ module MusicMapper
 
     user_artists = []
     api_response ||= LastFM::User.get_top_artists(:user => username,
-                                                :period => period,
-                                                :limit => limit)
+                                                  :period => period,
+                                                  :limit => limit)
 
     (api_response['topartists']['artist'] || []).each do |a|
       artist = a['name']
