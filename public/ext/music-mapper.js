@@ -67,7 +67,7 @@ function countryPlayCounts(root) {
                 }
 
                 countries[components[1]] = countries[components[1]] +
-                    +li.getElementsByClassName('playcount')[0].innerText;
+                    +li.getElementsByClassName('playcount')[0].textContent;
             }
         });
     }
