@@ -54,6 +54,8 @@ describe 'MusicMapper.artist_countries' do
   before do
     @cher = api_response('last_fm_artist_get_top_tags.json')
     @kylie = api_response('last_fm_artist_get_top_tags_kylie_minogue.json')
+    @one_tag = api_response('last_fm_artist_get_top_tags_late_junction.json')
+    @no_tags = api_response('last_fm_artist_get_top_tags_gb_and_jw.json')
   end
 
   it 'should return an array of all artist countries' do
@@ -71,6 +73,14 @@ describe 'MusicMapper.artist_countries' do
 
     MusicMapper.artist_countries('Cher', @kylie).map(&ISO3).
       should.equal originals
+  end
+
+  it 'should handle artists with only one tag' do
+    MusicMapper.artist_countries('One tag', @one_tag).should.equal []
+  end
+
+  it 'should handle artists with only no tags' do
+    MusicMapper.artist_countries('No tags', @no_tags).should.equal []
   end
 end
 

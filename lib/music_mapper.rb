@@ -55,7 +55,7 @@ module MusicMapper
     countries = []
     api_response ||= LastFM::Artist.get_top_tags(:artist => artist)
 
-    (api_response['toptags']['tag'] || []).each do |t|
+    [(api_response['toptags']['tag'] || [])].flatten.each do |t|
       if t['count'].to_i > 0
         countries << tag_to_countries(t['name'])
       end
