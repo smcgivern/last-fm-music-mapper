@@ -8,6 +8,7 @@ end
 
 set :haml, {:format => :html5}
 set :views, "#{File.dirname(__FILE__)}/view"
+set :static_cache_control, [:public, :max_age => 86400]
 
 helpers do
   include Rack::Utils
