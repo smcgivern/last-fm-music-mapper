@@ -157,10 +157,6 @@ module MusicMapper
           x = (i % 2) * 150
           y = (i / 2) * (height + 2)
 
-          if (i % 2 == 0) and ((i / 2) % 2 == 0)
-            body.rect(300, height + 1, 0, y).styles(:fill => '#ddd')
-          end
-
           flag = "./lib/music_mapper/flag/#{group[:iso_2].downcase}.svg"
 
           body.image(Magick::Image.read(flag).first, 40, height, x + 62, y + 1)
