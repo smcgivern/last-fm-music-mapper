@@ -18,6 +18,8 @@ task :update_images do
   Dir['public/image/**/*.png'].each do |file|
     username, period = file.split(/[\.\/]/)[2..3]
 
+    next if period == 'png'
+
     MusicMapper.flag_list(username,
                           period,
                           SETTINGS['image']['cache_directory'],
