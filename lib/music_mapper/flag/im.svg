@@ -50,7 +50,9 @@
   </metadata>
   <defs
      id="defs380">
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath9267">
       <rect
          id="rect9269"
          height="744.09448"
@@ -58,8 +60,10 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="744.09448"
          y="-1.5330501e-06" />
-    
-    
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath8588">
       <rect
          id="rect8590"
          height="512"
@@ -67,11 +71,12 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="682.66669"
          y="0" />
-    
+    </clipPath>
   </defs>
   <g
      transform="matrix(0.9375,0,0,0.9375,72.768536,0)"
      id="flag"
+     clip-path="url(#clipPath8588)"
      inkscape:label="#g8418">
     <rect
        width="731.42712"

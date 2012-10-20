@@ -84,7 +84,9 @@ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   </metadata>
   <defs
      id="defs550">
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4085">
       <rect
          id="rect4087"
          height="499.60632"
@@ -92,8 +94,10 @@ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="499.60632"
          y="-1.2807692e-05" />
-    
-    
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3532">
       <rect
          id="rect3534"
          height="512.01233"
@@ -101,11 +105,12 @@ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="682.68311"
          y="-0.012254236" />
-    
+    </clipPath>
   </defs>
   <g
      transform="matrix(0.93747745,0,0,0.93747745,67.379485,0.01148807)"
      id="flag"
+     clip-path="url(#clipPath3532)"
      inkscape:label="#g3460">
     <g
        transform="matrix(2.0478368,0,0,2.0483851,-148.56692,-1592.2445)"

@@ -66,7 +66,9 @@ Guinea, Honduras, Israel, Jamaica, Jordan, and Romania Flags</dc:title>
   </metadata>
   <defs
      id="defs613">
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath10932">
       <rect
          id="rect10934"
          height="666"
@@ -74,8 +76,10 @@ Guinea, Honduras, Israel, Jamaica, Jordan, and Romania Flags</dc:title>
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="666"
          y="1.0666406e-06" />
-    
-    
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4935">
       <rect
          id="rect4937"
          height="90"
@@ -83,11 +87,12 @@ Guinea, Honduras, Israel, Jamaica, Jordan, and Romania Flags</dc:title>
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="120"
          y="0" />
-    
+    </clipPath>
   </defs>
   <g
      transform="scale(5.3333333,5.3333333)"
      id="flag"
+     clip-path="url(#clipPath4935)"
      inkscape:label="#g644">
     <g
        id="g626">

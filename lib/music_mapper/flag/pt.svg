@@ -98,7 +98,9 @@
        x2="4203.3712"
        y2="-5035.3924"
        gradientTransform="scale(0.77466167,1.2908861)" />
-    
+    <clipPath
+       id="clipPath6279"
+       clipPathUnits="userSpaceOnUse">
       <rect
          y="-0.062422112"
          width="496.12543"
@@ -106,7 +108,7 @@
          x="111.37194"
          height="496.12543"
          id="rect6281" />
-    
+    </clipPath>
     <linearGradient
        y2="-5035.3924"
        x2="4203.3712"
@@ -129,7 +131,9 @@
        id="linearGradient11677"
        xlink:href="#linearGradient561"
        inkscape:collect="always" />
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath12804">
       <rect
          id="rect12806"
          height="512"
@@ -137,7 +141,7 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="512"
          y="0" />
-    
+    </clipPath>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient561"
@@ -171,7 +175,9 @@
        id="linearGradient6733"
        xlink:href="#linearGradient561"
        inkscape:collect="always" />
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath7504">
       <rect
          id="rect7506"
          height="512"
@@ -179,11 +185,12 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="682.66669"
          y="5.3048134e-06" />
-    
+    </clipPath>
   </defs>
   <g
      id="flag"
      transform="matrix(0.9375,0,0,0.9375,67.83006,-4.9732625e-6)"
+     clip-path="url(#clipPath7504)"
      inkscape:label="#g5598">
     <rect
        width="307.43155"

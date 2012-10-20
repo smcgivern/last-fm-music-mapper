@@ -173,7 +173,9 @@
     <linearGradient
        id="linearGradient685"
        xlink:href="#linearGradient651" />
-    
+    <clipPath
+       id="clipPath3811"
+       clipPathUnits="userSpaceOnUse">
       <rect
          y="0"
          x="6"
@@ -181,8 +183,10 @@
          width="512"
          id="rect3813"
          style="fill:#808080;fill-opacity:1;stroke:none" />
-    
-    
+    </clipPath>
+    <clipPath
+       id="clipPath4253"
+       clipPathUnits="userSpaceOnUse">
       <rect
          y="5.0519466e-06"
          width="682.66669"
@@ -190,8 +194,10 @@
          x="-49.985207"
          height="512"
          id="rect4255" />
-    
-    
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath5171">
       <rect
          id="rect5173"
          height="480"
@@ -199,7 +205,7 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="640"
          y="0" />
-    
+    </clipPath>
   </defs>
   <namedview
      snaptoguides="false"
@@ -210,6 +216,7 @@
      id="base" />
   <g
      id="flag"
+     clip-path="url(#clipPath5171)"
      inkscape:label="#g4805">
     <g
        id="g3706"

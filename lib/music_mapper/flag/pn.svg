@@ -56,15 +56,18 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 300 : 1"
        sodipodi:type="inkscape:persp3d" />
-    
+    <clipPath
+       id="border">
       <rect
          id="rect6"
          height="15"
          width="30"
          y="-7.5"
          x="-15" />
-    
-    
+    </clipPath>
+    <clipPath
+       id="clipPath3899"
+       clipPathUnits="userSpaceOnUse">
       <rect
          y="-15"
          width="30"
@@ -72,7 +75,7 @@
          x="-15"
          height="30"
          id="rect3901" />
-    
+    </clipPath>
   </defs>
   <comment
      id="comment10">The above line is the ensign field color: #CF142B red and #00247D blue</comment>
@@ -90,6 +93,7 @@
        id="canton"
        transform="translate(0,-3.75)">
       <g
+         clip-path="url(#border)"
          id="g13">
         <circle
            style="fill:#00247d"

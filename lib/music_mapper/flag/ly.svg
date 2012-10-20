@@ -27,7 +27,9 @@
   </metadata>
   <defs
      id="defs14">
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3005">
       <rect
          style="fill:#000000;fill-opacity:1;stroke:none"
          id="rect3007"
@@ -35,7 +37,7 @@
          height="500"
          x="166.66667"
          y="-20" />
-    
+    </clipPath>
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -60,6 +62,7 @@
   <g
      id="flag"
      transform="matrix(0.96,0,0,0.96,-160,19.2)"
+     clip-path="url(#clipPath3005)"
      inkscape:label="#g2993">
     <rect
        style="fill:#239e46"

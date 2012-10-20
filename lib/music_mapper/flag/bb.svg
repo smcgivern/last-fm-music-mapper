@@ -49,6 +49,7 @@
        transform="matrix(1.25,0,0,0.9375,0,1.4084077e-5)"
        id="g3197">
       <rect
+         clip-path="none"
          y="-1.465477e-05"
          x="0"
          height="512"
@@ -56,6 +57,7 @@
          id="rect807"
          style="font-size:12px;fill:#00009d;fill-opacity:1;fill-rule:evenodd;stroke-width:1pt" />
       <rect
+         clip-path="none"
          y="-1.465477e-05"
          x="341.33334"
          height="512"
@@ -63,6 +65,7 @@
          id="rect808"
          style="font-size:12px;fill:#00009d;fill-opacity:1;fill-rule:evenodd;stroke-width:1pt" />
       <rect
+         clip-path="none"
          y="-1.465477e-05"
          x="170.66667"
          height="512"

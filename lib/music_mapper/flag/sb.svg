@@ -46,7 +46,9 @@
        id="namedview1340" />
     <defs
        id="defs380" />
-    
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath5251">
       <rect
          id="rect5253"
          height="496.06335"
@@ -54,8 +56,10 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="496.06335"
          y="-5.5504192e-05" />
-    
-    
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath15551">
       <rect
          id="rect15553"
          height="512"
@@ -63,11 +67,12 @@
          style="fill:#000000;fill-opacity:0.67000002;stroke:none"
          width="682.66669"
          y="0" />
-    
+    </clipPath>
   </defs>
   <g
      transform="scale(0.9375,0.9375)"
      id="flag"
+     clip-path="url(#clipPath15551)"
      inkscape:label="#g15471">
     <path
        inkscape:connector-curvature="0"

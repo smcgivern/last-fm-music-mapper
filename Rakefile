@@ -24,14 +24,3 @@ task :update_images do
                           SETTINGS['image']['cache_for'])
   end
 end
-
-desc 'Remove clipPaths'
-task :remove_clippaths do
-  Dir['./lib/music_mapper/flag/*.svg'].each do |file|
-    new = open(file).read.
-      gsub(/<\/?clipPath.*?\/?>/m, '').
-      gsub(/\n\s*clip-path=".*?"\s*\n/, "\n")
-
-    open(file, 'w').puts(new)
-  end
-end
