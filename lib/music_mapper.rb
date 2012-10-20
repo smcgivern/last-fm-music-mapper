@@ -141,11 +141,11 @@ module MusicMapper
   end
 
   def self.generate_flag_list(groups, output)
-    height = 30
+    height = 20
     rows = groups[0..29].length / 2
 
     styles = {
-      :font_size => 16, :font_family => 'DejaVu Sans Condensed',
+      :font_size => 12, :font_family => 'DejaVu Sans Condensed',
       :font_style => 'normal', :font_weight => 'bold',
     }
 
@@ -165,10 +165,10 @@ module MusicMapper
 
           body.image(Magick::Image.read(flag).first, 40, height, x + 62, y + 1)
 
-          body.text(x + 104, y + 22, group[:iso_3]).
+          body.text(x + 100, y + 15, group[:iso_3]).
             styles(styles)
 
-          body.text(x + 60, y + 22, thousands(group[:playcount])).
+          body.text(x + 64, y + 15, thousands(group[:playcount])).
             styles(styles.merge(:text_anchor => 'end'))
         end
       end
