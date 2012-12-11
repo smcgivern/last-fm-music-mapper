@@ -125,7 +125,7 @@ function highlightArtists(root, isoCode) {
         if (li.className.indexOf('country-' + isoCode) > -1) {
             li.className = li.className + ' highlight';
 
-            window.setTimeout(function(li) { removeHighlight(li); }, 5000, li);
+            window.setTimeout(function(li) { removeHighlight(li); }, 30000, li);
         }
     }
 }
