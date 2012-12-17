@@ -150,7 +150,7 @@ module MusicMapper
     }
 
     Magick::RVG.new(300, (height + 2) * rows) do |canvas|
-      canvas.background_fill = '#eee'
+      canvas.background_fill = '#fff'
 
       canvas.g do |body|
         groups[0..29].each_with_index do |group, i|
