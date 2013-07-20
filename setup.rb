@@ -18,10 +18,3 @@ if SETTINGS['artist'] && SETTINGS['artist']['cache_file']
     MusicMapper.artists_to_cache(SETTINGS['artist']['cache_file'])
   end
 end
-
-if SETTINGS['sinatra_log']
-  log_file = File.open(SETTINGS['sinatra_log'], 'a')
-
-  $stdout.reopen(log_file)
-  $stderr.reopen(log_file)
-end

@@ -6,6 +6,13 @@ module Kramdown
   end
 end
 
+if SETTINGS['sinatra_log']
+  log_file = File.open(SETTINGS['sinatra_log'], 'a+')
+  log_file.sync = true
+
+  use Rack::CommonLogger, log_file
+end
+
 set :haml, {:format => :html5}
 set :views, "#{File.dirname(__FILE__)}/view"
 set :static_cache_control, [:public, {:max_age => 86400}]
