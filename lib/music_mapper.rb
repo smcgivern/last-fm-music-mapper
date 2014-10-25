@@ -58,12 +58,18 @@ module MusicMapper
     end
 
     countries = []
-    api_response ||= LastFM::Artist.get_top_tags(:artist => artist)
 
-    [(api_response['toptags']['tag'] || [])].flatten.each do |t|
-      if t['count'].to_i > 0
-        countries << tag_to_countries(t['name'])
+    begin
+      api_response ||= LastFM::Artist.get_top_tags(:artist => artist)
+
+      [(api_response['toptags']['tag'] || [])].flatten.each do |t|
+        if t['count'].to_i > 0
+          countries << tag_to_countries(t['name'])
+        end
       end
+    rescue StandardError => e
+      # See https://github.com/smcgivern/last-fm-music-mapper/issues/1#issuecomment-54494249
+      raise e unless e.message =~ /^The artist you supplied could not be found/
     end
 
     countries = countries.uniq.flatten.sort_by {|c| c[:name]}

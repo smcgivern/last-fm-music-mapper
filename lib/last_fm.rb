@@ -103,7 +103,7 @@ module LastFM
 
         response = JSON.parse(open(address).read)
 
-        raise(Exception, response['message']) if response['error']
+        raise(response['message']) if response['error']
 
         if cache_directory
           file = open(cache_file, 'w')
