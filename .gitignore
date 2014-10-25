@@ -2,4 +2,5 @@ settings.json
 *.org
 *.rake
 .*
-!/.gitignore
+tmp/
+public/image/*/*
