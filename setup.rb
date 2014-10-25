@@ -1,6 +1,8 @@
 require 'json'
 require './lib/music_mapper'
 
+Encoding.default_external = Encoding::UTF_8
+
 unless defined? SETTINGS
   SETTINGS = JSON.parse(open('settings.json').read)
 end
