@@ -13,7 +13,7 @@ end
 desc 'Update any stale images'
 task :update_images do
   require 'bundler/setup'
-  require 'setup'
+  require './setup'
 
   Dir['public/image/**/*.png'].each do |file|
     username, period = file.split(/[\.\/]/)[2..3]
