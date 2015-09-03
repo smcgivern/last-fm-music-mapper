@@ -78,7 +78,7 @@ module MusicMapper
     ARTISTS[artist][:countries] = countries
   end
 
-  def self.user_artists(username, period='7day', limit=10_000, api_response=nil)
+  def self.user_artists(username, period='7day', limit=1_000, api_response=nil)
     if USERS[username] && USERS[username][period]
       return USERS[username][period]
     end
