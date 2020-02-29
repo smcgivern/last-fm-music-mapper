@@ -4,3 +4,5 @@ settings.json
 .*
 tmp/
 public/image/*/*
+
+public/ext/style.css

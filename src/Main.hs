@@ -6,6 +6,7 @@ module Main (main) where
 
 import Data.Aeson
 import GHC.Generics
+import Network.Wai.Middleware.Static
 import Text.Mustache
 import Web.Scotty
 
@@ -18,6 +19,7 @@ data IndexPage = IndexPage
 instance ToJSON IndexPage
 
 main = scotty 3000 $ do
+  middleware $ staticPolicy (addBase "./public")
   get "/" $ do
     username <- param "username" `rescue` (\_ -> next)
     redirect $ mconcat ["/:", username]

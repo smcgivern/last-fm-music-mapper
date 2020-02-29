@@ -19,3 +19,4 @@ executable last-fm-music-mapper
                      , scotty
                      , stache
                      , aeson
+                     , wai-middleware-static
