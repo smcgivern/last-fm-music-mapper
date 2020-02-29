@@ -20,3 +20,4 @@ executable last-fm-music-mapper
                      , stache
                      , aeson
                      , wai-middleware-static
+                     , text

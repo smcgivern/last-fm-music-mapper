@@ -9,13 +9,64 @@
     <h1>{{ pageTitle }}</h1>
     <form action="/"> <!-- base URL -->
       <p>
-        You want a music map
+        You want a music map for the
+        <select name="period" id="period">
+          {{#periods}}
+          <option value="{{ identifier }}">{{ name }}</option>
+          {{/periods}}
+        </select>
         for Last.fm username
-        <input type="text" name="username" id="username" size="10" placeholder="smcgivern">
+        <input type="text" name="username" id="username" size="10" value="smcgivern" onfocus="this.value = ''">
         —
         <input class="go" type="submit" value="create it!">
       </p>
     </form>
+    <p>
+      This is a tool I made
+      for <a href="http://last.fm/user/smcgivern">my own profile</a> to
+      see how much music I listened to by country. To try it out, fill
+      in the fields above. If you put the picture in your profile, it
+      will automatically update every week or so. There are some
+      caveats:
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          The <a href="http://last.fm/api">Last.fm API</a> has a speed
+          limit on it of 5 requests per second. Each music map needs one
+          request for the initial list of artists, and
+          then <em>another</em> request for every single artist to find
+          out where they’re from. I get around it by storing the
+          responses, so it shouldn’t be that slow in general, but please
+          bear that in mind.
+        </p>
+      </li>
+      <li>
+        <p>
+          Last.fm don’t store an artist’s country, but they do let people
+          <a href="https://en.wikipedia.org/wiki/Tag_(metadata)">tag</a>
+          songs. This tool uses those tags to guess where an artist is
+          from, but sometimes they’ll be missing or wrong.
+        </p>
+      </li>
+      <li>
+        <p>
+          They make me include this button, to show that it’s powered by Last.fm:
+          <a href="http://last.fm/">
+            <!-- base URL -->
+            <img src="image/lastfm.gif" width="80" height="28" alt="Last.fm logo" style="vertical-align:text-top;" />
+          </a>
+        </p>
+      </li>
+      <li>
+        <p>
+          Not a caveat, but the source is
+          <a href="https://github.com/smcgivern/last-fm-music-mapper">
+            available on GitHub</a>.
+        </p>
+      </li>
+    </ol>
     <div id="byline">
       <p>
         By
