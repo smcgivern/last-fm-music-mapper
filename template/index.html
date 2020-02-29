@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ pageTitle }}</title>
+    <link href="/ext/style.css" rel="stylesheet" type="text/css"> <!-- base URL -->
+    <link href="/image/app-icon.png" rel="apple-touch-icon"> <!-- base URL -->
+  </head>
+  <body>
+    <h1>{{ pageTitle }}</h1>
+    <form action="/"> <!-- base URL -->
+      <p>
+        You want a music map
+        for Last.fm username
+        <input type="text" name="username" id="username" size="10" placeholder="smcgivern">
+        —
+        <input class="go" type="submit" value="create it!">
+      </p>
+    </form>
+    <div id="byline">
+      <p>
+        By
+        <a href="https://sean.mcgivern.me.uk/">Sean McGivern</a>
+      </p>
+    </div>
+  </body>
+</html>
