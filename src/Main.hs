@@ -1,5 +1,6 @@
-module Main where
+{-# LANGUAGE OverloadedStrings #-}
+import Web.Scotty
 
-main :: IO ()
-main = do
-  putStrLn "hello world"
+main = scotty 3000 $ do
+  get "/" $ do
+    html "Hello World!"
