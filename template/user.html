@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Last.fm music map for {{ username }}</title>
+    <link href="/ext/style.css" rel="stylesheet" type="text/css"> <!-- base URL -->
+    <link href="/image/app-icon.png" rel="apple-touch-icon"> <!-- base URL -->
+  </head>
+  <body>
+    <h1>
+      <a href="/">Last.fm music map</a> <!-- base URL -->
+      for
+      <a href="https://last.fm/user/{{ username }}">{{ username }}</a>
+    </h1>
+    <p>
+      All done! You can see your music map below, generated with these settings:
+      <code>username: {{ username }}, period: {{ lowerPeriodName }}</code>.
+    </p>
+    <p>
+      Some artists might be missing countries. If you see one of them below, add
+      a tag by clicking the link in the artist box and it will be picked up the
+      next time the page is generated. The tag name needs to be either the
+      country name (‘Mali’) or an adjective (‘Malian’).
+    </p>
+    <div id="byline">
+      <p>
+        By
+        <a href="https://sean.mcgivern.me.uk/">Sean McGivern</a>
+      </p>
+    </div>
+  </body>
+</html>

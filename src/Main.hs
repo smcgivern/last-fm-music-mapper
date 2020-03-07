@@ -10,6 +10,8 @@ import Network.Wai.Middleware.Static
 import Text.Mustache
 import Web.Scotty
 
+import qualified Data.List as List
+import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Lazy as Lazy
 import qualified Text.Mustache.Compile.TH as TH
@@ -27,6 +29,13 @@ data IndexPage = IndexPage
   } deriving (Eq, Show, Generic)
 
 instance ToJSON IndexPage
+
+data UserPage = UserPage
+  { username :: String
+  , lowerPeriodName :: Text.Text
+  } deriving (Eq, Show, Generic)
+
+instance ToJSON UserPage
 
 defaultPeriods =
   [ Period { identifier = "7day", name = "Last 7 days" }
@@ -60,6 +69,13 @@ main = scotty 3000 $ do
     redirect $ mconcat ["/:", username, "/", period, "/"]
   get (regex "^/:([^/]+)/([^/]+)/?$") $ do
     username <- param "1"
-    period <- param "2"
+    periodId <- param "2"
 
-    html $ mconcat ["<h1>Hello, ", username, " (", period, ")!</h1>"]
+    let template = $(TH.compileMustacheFile "./template/user.html")
+    let period = Maybe.fromMaybe (head defaultPeriods) (List.find (\x -> (identifier x) == periodId) defaultPeriods)
+    let userPage = UserPage
+                   { username = username
+                   , lowerPeriodName = Text.toLower $ name $ period
+                   }
+
+    html $ renderMustache template (toJSON userPage)
