@@ -14,11 +14,12 @@ import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Lazy as Lazy
+import qualified Network.Wai as Wai
 import qualified Text.Mustache.Compile.TH as TH
 
 data Config = Config
   { key :: Text.Text
-  , port :: Int
+  , port :: Int -- leading slash if non-empty; no trailing slash
   , root :: Text.Text
   } deriving (Show, Generic)
 
@@ -55,16 +56,24 @@ defaultPeriods =
   , Period { identifier = "overall", name = "Overall" }
   ]
 
+setBaseUrl baseUrl app request respond = do
+  let oldPathInfo = Wai.pathInfo request
+  let newPathInfo = case List.stripPrefix (tail $ Text.splitOn "/" baseUrl) oldPathInfo of
+        Just x -> x
+        Nothing -> ["404-not-found"] -- otherwise this will match against the root, too
+  app (request { Wai.pathInfo = newPathInfo }) respond
+
 run config = do
   let baseUrl = root config
 
+  middleware $ setBaseUrl baseUrl
   middleware $ staticPolicy (addBase "./public")
 
   get "/" $ do
     username <- param "username" `rescue` (\_ -> next)
     period <- param "period" `rescue` (\_ -> next)
 
-    redirect $ mconcat ["/:", username, "/", period, "/"]
+    redirect $ mconcat [Lazy.fromStrict baseUrl, "/:", username, "/", period, "/"]
 
   get "/" $ do
     let template = $(TH.compileMustacheFile "./template/index.html")
@@ -80,7 +89,7 @@ run config = do
     username <- param "1"
     let period = Lazy.fromStrict $ identifier $ head defaultPeriods
 
-    redirect $ mconcat ["/:", username, "/", period, "/"]
+    redirect $ mconcat [Lazy.fromStrict baseUrl, "/:", username, "/", period, "/"]
 
   get (regex "^/:([^/]+)/([^/]+)/?$") $ do
     username <- param "1"

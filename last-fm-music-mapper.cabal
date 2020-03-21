@@ -21,3 +21,4 @@ executable last-fm-music-mapper
                      , aeson
                      , wai-middleware-static
                      , text
+                     , wai

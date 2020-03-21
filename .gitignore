@@ -5,4 +5,5 @@ settings.json
 tmp/
 public/image/*/*
 
+config.json
 public/ext/style.css
