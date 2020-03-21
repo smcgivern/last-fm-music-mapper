@@ -16,6 +16,14 @@ import qualified Data.Text as Text
 import qualified Data.Text.Lazy as Lazy
 import qualified Text.Mustache.Compile.TH as TH
 
+data Config = Config
+  { key :: Text.Text
+  , port :: Int
+  , root :: Text.Text
+  } deriving (Show, Generic)
+
+instance FromJSON Config
+
 data Period = Period
   { identifier :: Text.Text
   , name :: Text.Text
@@ -24,14 +32,15 @@ data Period = Period
 instance ToJSON Period
 
 data IndexPage = IndexPage
-  { pageTitle :: String
+  { indexBaseUrl :: Text.Text
   , periods :: [Period]
   } deriving (Eq, Show, Generic)
 
 instance ToJSON IndexPage
 
 data UserPage = UserPage
-  { username :: String
+  { userBaseUrl :: Text.Text
+  , username :: String
   , lowerPeriodName :: Text.Text
   } deriving (Eq, Show, Generic)
 
@@ -46,27 +55,33 @@ defaultPeriods =
   , Period { identifier = "overall", name = "Overall" }
   ]
 
-main = scotty 3000 $ do
+run config = do
+  let baseUrl = root config
+
   middleware $ staticPolicy (addBase "./public")
+
   get "/" $ do
     username <- param "username" `rescue` (\_ -> next)
     period <- param "period" `rescue` (\_ -> next)
 
     redirect $ mconcat ["/:", username, "/", period, "/"]
+
   get "/" $ do
     let template = $(TH.compileMustacheFile "./template/index.html")
     let lowerPeriods = map (\x -> x { name = (Text.toLower (name x)) }) defaultPeriods
     let indexPage = IndexPage
-                    { pageTitle = "Last.fm music mapper"
+                    { indexBaseUrl = baseUrl
                     , periods = lowerPeriods
                     }
 
     html $ renderMustache template (toJSON indexPage)
+
   get (regex "^/:([^/]+)/?$") $ do
     username <- param "1"
     let period = Lazy.fromStrict $ identifier $ head defaultPeriods
 
     redirect $ mconcat ["/:", username, "/", period, "/"]
+
   get (regex "^/:([^/]+)/([^/]+)/?$") $ do
     username <- param "1"
     periodId <- param "2"
@@ -74,8 +89,18 @@ main = scotty 3000 $ do
     let template = $(TH.compileMustacheFile "./template/user.html")
     let period = Maybe.fromMaybe (head defaultPeriods) (List.find (\x -> (identifier x) == periodId) defaultPeriods)
     let userPage = UserPage
-                   { username = username
+                   { userBaseUrl = baseUrl
+                   , username = username
                    , lowerPeriodName = Text.toLower $ name $ period
                    }
 
     html $ renderMustache template (toJSON userPage)
+
+main = do
+  config <- do
+    parseResult <- decodeFileStrict' "config.json"
+    case parseResult of
+      Just c -> return c
+      Nothing -> return Config { key = "", port = 3000, root = "" }
+
+  scotty (port config) (run config)

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ pageTitle }}</title>
-    <link href="/ext/style.css" rel="stylesheet" type="text/css"> <!-- base URL -->
-    <link href="/image/app-icon.png" rel="apple-touch-icon"> <!-- base URL -->
+    <title>Last.fm music mapper</title>
+    <link href="{{ indexBaseUrl }}/ext/style.css" rel="stylesheet" type="text/css">
+    <link href="{{ indexBaseUrl }}/image/app-icon.png" rel="apple-touch-icon"> <!-- base URL -->
   </head>
   <body>
-    <h1>{{ pageTitle }}</h1>
-    <form action="/"> <!-- base URL -->
+    <h1>Last.fm music mapper</h1>
+    <form action="{{ indexBaseUrl }}/">
       <p>
         You want a music map for the
         <select name="period" id="period">
@@ -54,8 +54,7 @@
         <p>
           They make me include this button, to show that it’s powered by Last.fm:
           <a href="http://last.fm/">
-            <!-- base URL -->
-            <img src="image/lastfm.gif" width="80" height="28" alt="Last.fm logo" style="vertical-align:text-top;" />
+            <img src="{{ indexBaseUrl }}/image/lastfm.gif" width="80" height="28" alt="Last.fm logo" style="vertical-align:text-top;" />
           </a>
         </p>
       </li>

@@ -2,12 +2,12 @@
 <html>
   <head>
     <title>Last.fm music map for {{ username }}</title>
-    <link href="/ext/style.css" rel="stylesheet" type="text/css"> <!-- base URL -->
-    <link href="/image/app-icon.png" rel="apple-touch-icon"> <!-- base URL -->
+    <link href="{{ userBaseUrl }}/ext/style.css" rel="stylesheet" type="text/css">
+    <link href="{{ userBaseUrl }}/image/app-icon.png" rel="apple-touch-icon">
   </head>
   <body>
     <h1>
-      <a href="/">Last.fm music map</a> <!-- base URL -->
+      <a href="{{ userBaseUrl }}/">Last.fm music map</a>
       for
       <a href="https://last.fm/user/{{ username }}">{{ username }}</a>
     </h1>
