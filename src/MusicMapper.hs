@@ -4,6 +4,7 @@ module MusicMapper (userArtists) where
 
 import Lastfm
 
+import qualified Countries as Countries
 import qualified Lastfm.Artist as Artist
 import qualified Lastfm.User as User
 
