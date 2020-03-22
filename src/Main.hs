@@ -14,6 +14,7 @@ import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Lazy as Lazy
+import qualified MusicMapper as MusicMapper
 import qualified Network.Wai as Wai
 import qualified Text.Mustache.Compile.TH as TH
 

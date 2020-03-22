@@ -3,7 +3,21 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    cabal-file:
+      size: 3493
+      sha256: 364452826204a5ea8994c1a42cf40f1c213ac201a381573992412fca8aac3d96
+    name: liblastfm
+    version: 0.7.0
+    git: https://github.com/smcgivern/liblastfm.git
+    pantry-tree:
+      size: 4844
+      sha256: db4c8f94b2fffbff75b5b4eb3e97356f6540f7c66f145f742e6cc135167f9913
+    commit: 08d89aa0066d2029f3150a32d90f3a4833089d46
+  original:
+    git: https://github.com/smcgivern/liblastfm.git
+    commit: 08d89aa0066d2029f3150a32d90f3a4833089d46
 snapshots:
 - completed:
     size: 489011
