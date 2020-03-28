@@ -20,8 +20,8 @@ import qualified Text.Mustache.Compile.TH as TH
 
 data Config = Config
   { key :: Text.Text
-  , port :: Int -- leading slash if non-empty; no trailing slash
-  , root :: Text.Text
+  , port :: Int
+  , root :: Text.Text -- leading slash if non-empty; no trailing slash
   } deriving (Show, Generic)
 
 instance FromJSON Config
