@@ -1,9 +1,10 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Countries (countries) where
+module Countries (countriesFor) where
 
-import Data.Text
+import Data.List
+import Data.Text (Text, toLower)
 import GHC.Generics
 
 data Country = Country
@@ -12,6 +13,10 @@ data Country = Country
   , iso3 :: Text
   , adjectives :: [Text]
   } deriving (Show, Generic)
+
+countriesFor tags = filter (hasAdjective tags) countries
+lower = map toLower
+hasAdjective tags country = not $ null $ intersect (lower tags) (lower (adjectives country))
 
 -- Adapted from
 --   <http://publications.europa.eu/code/en/en-5000500.htm>

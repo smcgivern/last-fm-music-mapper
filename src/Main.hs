@@ -42,8 +42,9 @@ instance ToJSON IndexPage
 
 data UserPage = UserPage
   { userBaseUrl :: Text.Text
-  , username :: String
+  , username :: Text.Text
   , lowerPeriodName :: Text.Text
+  , artistNames :: [Text.Text]
   } deriving (Eq, Show, Generic)
 
 instance ToJSON UserPage
@@ -64,7 +65,7 @@ setBaseUrl baseUrl app request respond = do
         Nothing -> ["404-not-found"] -- otherwise this will match against the root, too
   app (request { Wai.pathInfo = newPathInfo }) respond
 
-run config = do
+run config conn = do
   let baseUrl = root config
 
   middleware $ setBaseUrl baseUrl
@@ -98,10 +99,14 @@ run config = do
 
     let template = $(TH.compileMustacheFile "./template/user.html")
     let period = Maybe.fromMaybe (head defaultPeriods) (List.find (\x -> (identifier x) == periodId) defaultPeriods)
+
+    artists <- liftAndCatchIO $ MusicMapper.userArtists conn (key config) username (identifier period)
+
     let userPage = UserPage
                    { userBaseUrl = baseUrl
                    , username = username
                    , lowerPeriodName = Text.toLower $ name $ period
+                   , artistNames = artists
                    }
 
     html $ renderMustache template (toJSON userPage)
@@ -113,4 +118,6 @@ main = do
       Just c -> return c
       Nothing -> return Config { key = "", port = 3000, root = "" }
 
-  scotty (port config) (run config)
+  conn <- MusicMapper.newConnection
+
+  scotty (port config) (run config conn)
