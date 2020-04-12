@@ -28,3 +28,6 @@ executable last-fm-music-mapper
                      , vector
                      , wai
                      , wai-middleware-static
+  default-extensions:  DeriveAnyClass
+                     , DeriveGeneric
+                     , OverloadedStrings
