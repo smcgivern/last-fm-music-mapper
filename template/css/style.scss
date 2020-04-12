@@ -49,7 +49,7 @@ img {
     list-style-type: none;
 }
 
-#artists li {
+#artists>li {
     float: left;
     margin: 0.2em;
     padding: 0.1em;
@@ -76,6 +76,16 @@ img {
     font-style: normal;
     background: #ccc;
     cursor: pointer;
+}
+
+.country-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.country-list li {
+    display: inline;
 }
 
 .error {

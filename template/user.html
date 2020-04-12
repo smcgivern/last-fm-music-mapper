@@ -33,16 +33,19 @@
       <p>
         Plays: <span class="playcount">{{ playcount }}</span>
       </p>
-      <p>
-        From:
-        <ul>
+      <ul class="country-list">
         {{#countries}}
         <li>
           <em class="country-{{ iso3 }} country-name">{{ name }}</em>
         </li>
         {{/countries}}
-        </ul>
-      </p>
+        {{^countries}}
+        <li>
+          <span class="country-name error">Nowhere</span>?
+          (<a href="{{ url }}/+tags" title="Tags for {{ name }}">Add a tag!</a>)
+        </li>
+        {{/countries}}
+      </ul>
     </li>
     {{/artists}}
     </ol>
