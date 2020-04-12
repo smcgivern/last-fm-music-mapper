@@ -25,13 +25,23 @@
     </object>
     <ol id="artists">
     {{#artists}}
-    <li>
+    <li class="{{#countries}}country-{{ iso3 }} {{/countries}}">
       <h3>
         <a href="{{ url }}"><img src="{{ imageUrl }}" width="64" alt=""></a>
         <a href="{{ url }}">{{ name }}</a>
       </h3>
       <p>
         Plays: <span class="playcount">{{ playcount }}</span>
+      </p>
+      <p>
+        From:
+        <ul>
+        {{#countries}}
+        <li>
+          <em class="country-{{ iso3 }} country-name">{{ name }}</em>
+        </li>
+        {{/countries}}
+        </ul>
       </p>
     </li>
     {{/artists}}
@@ -42,7 +52,7 @@
         <a href="https://sean.mcgivern.me.uk/">Sean McGivern</a>
       </p>
     </div>
-    <script src="{{ userBaseUrl }}/ext/masonry.js" type="text/javascript"></script>
+    <script src="{{ userBaseUrl }}/ext/masonry.min.js" type="text/javascript"></script>
     <script src="{{ userBaseUrl }}/ext/music-mapper.js" type="text/javascript"></script>
   </body>
 </html>

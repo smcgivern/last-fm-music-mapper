@@ -67,14 +67,21 @@ instance FromJSON Artist where
       , url = url
       }
 
-artistsList response = do
-  case response of
-    Left _ -> []
-    Right x -> Maybe.fromMaybe [] $ parseMaybe parseArtists x
-
 userArtists conn key username periodId = do
   response <- lastfm conn $ getTopArtists <*> user username <* limit 1000 <* period periodId <*> apiKey key <* Lastfm.json
-  return $ artistsList response
+
+  let artistsList response = do
+        case response of
+          Left _ -> []
+          Right x -> Maybe.fromMaybe [] $ parseMaybe parseArtists x
+
+  let updateCountries artist = do
+        countries <- artistCountries conn key (name artist)
+        return $ artist { countries = countries }
+
+  updated <- mapM updateCountries $ artistsList response
+
+  return updated
 
 artistTags response = do
   case response of
