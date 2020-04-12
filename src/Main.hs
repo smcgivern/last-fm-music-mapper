@@ -29,14 +29,14 @@ instance FromJSON Config
 data Period = Period
   { identifier :: Text.Text
   , name :: Text.Text
-  } deriving (Eq, Show, Generic)
+  } deriving (Eq, Generic, Show)
 
 instance ToJSON Period
 
 data IndexPage = IndexPage
   { indexBaseUrl :: Text.Text
   , periods :: [Period]
-  } deriving (Eq, Show, Generic)
+  } deriving (Eq, Generic, Show)
 
 instance ToJSON IndexPage
 
@@ -44,8 +44,8 @@ data UserPage = UserPage
   { userBaseUrl :: Text.Text
   , username :: Text.Text
   , lowerPeriodName :: Text.Text
-  , artistNames :: [Text.Text]
-  } deriving (Eq, Show, Generic)
+  , artists :: [MusicMapper.Artist]
+  } deriving (Eq, Generic, Show)
 
 instance ToJSON UserPage
 
@@ -106,7 +106,7 @@ run config conn = do
                    { userBaseUrl = baseUrl
                    , username = username
                    , lowerPeriodName = Text.toLower $ name $ period
-                   , artistNames = artists
+                   , artists = artists
                    }
 
     html $ renderMustache template (toJSON userPage)

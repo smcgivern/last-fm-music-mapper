@@ -25,5 +25,6 @@ executable last-fm-music-mapper
                      , scotty
                      , stache
                      , text
+                     , vector
                      , wai
                      , wai-middleware-static

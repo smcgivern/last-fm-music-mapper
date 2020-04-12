@@ -1,8 +1,10 @@
+{-# LANGUAGE DeriveAnyClass    #-}
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Countries (countriesFor) where
+module Countries (Country, countriesFor) where
 
+import Data.Aeson
 import Data.List
 import Data.Text (Text, toLower)
 import GHC.Generics
@@ -12,7 +14,7 @@ data Country = Country
   , iso2 :: Text
   , iso3 :: Text
   , adjectives :: [Text]
-  } deriving (Show, Generic)
+  } deriving (Eq, Generic, Show, ToJSON)
 
 countriesFor tags = filter (hasAdjective tags) countries
 lower = map toLower
