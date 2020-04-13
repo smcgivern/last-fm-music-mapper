@@ -1,5 +1,6 @@
 .sass-cache/
 .stack-work/
+*.mk
 config.json
 public/ext/style.css
 tmp/
