@@ -9,8 +9,7 @@ jobs:
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           name: Restore Cached Dependencies
           keys:
-            - last-fm-music-mapper-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
-            - last-fm-music-mapper-{{ checksum "stack.yaml" }}
+            - last-fm-music-mapper-{{ checksum "stack.yaml" }}-{{ checksum "last-fm-music-mapper.cabal" }}
       - run:
           name: Resolve/Update Dependencies
           command: stack --no-terminal setup
@@ -19,11 +18,11 @@ jobs:
           command: stack --no-terminal install
       - save_cache:
           name: Cache Dependencies
-          key: last-fm-music-mapper-{{ checksum "stack.yaml" }}-{{ checksum "package.yaml" }}
+          key: last-fm-music-mapper-{{ checksum "stack.yaml" }}-{{ checksum "last-fm-music-mapper.cabal" }}
           paths:
             - "/root/.stack"
             - ".stack-work"
       - store_artifacts:
-          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/ 
+          # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: ~/.local/bin/last-fm-music-mapper
           destination: last-fm-music-mapper
