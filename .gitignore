@@ -1,6 +1,5 @@
-settings.json
-*.org
-*.rake
-.*
+.sass-cache/
+.stack-work/
+config.json
+public/ext/style.css
 tmp/
-public/image/*/*

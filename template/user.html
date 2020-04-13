@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Last.fm music map for {{ username }}</title>
+    <link href="{{ userBaseUrl }}/ext/style.css" rel="stylesheet" type="text/css">
+    <link href="{{ userBaseUrl }}/image/app-icon.png" rel="apple-touch-icon">
+  </head>
+  <body>
+    <h1>
+      <a href="{{ userBaseUrl }}/">Last.fm music map</a>
+      for
+      <a href="https://last.fm/user/{{ username }}">{{ username }}</a>
+    </h1>
+    <p>
+      All done! You can see your music map below, generated with these settings:
+      <code>username: {{ username }}, period: {{ lowerPeriodName }}</code>.
+    </p>
+    <p>
+      Some artists might be missing countries. If you see one of them below, add
+      a tag by clicking the link in the artist box and it will be picked up the
+      next time the page is generated. The tag name needs to be either the
+      country name (‘Mali’) or an adjective (‘Malian’).
+    </p>
+    <object id="map" data="{{ userBaseUrl }}/image/world.svg" width="100%" type="image/svg+xml">
+    </object>
+    <ol id="artists">
+    {{#artists}}
+    <li class="{{#countries}}country-{{ iso3 }} {{/countries}}">
+      <h3>
+        <a href="{{ url }}"><img src="{{ imageUrl }}" width="64" alt=""></a>
+        <a href="{{ url }}">{{ name }}</a>
+      </h3>
+      <p>
+        Plays: <span class="playcount">{{ playcount }}</span>
+      </p>
+      <ul class="country-list">
+        {{#countries}}
+        <li>
+          <em class="country-{{ iso3 }} country-name">{{ name }}</em>
+        </li>
+        {{/countries}}
+        {{^countries}}
+        <li>
+          <span class="country-name error">Nowhere</span>?
+          (<a href="{{ url }}/+tags" title="Tags for {{ name }}">Add a tag!</a>)
+        </li>
+        {{/countries}}
+      </ul>
+    </li>
+    {{/artists}}
+    </ol>
+    <div id="byline">
+      <p>
+        By
+        <a href="https://sean.mcgivern.me.uk/">Sean McGivern</a>
+      </p>
+    </div>
+    <script src="{{ userBaseUrl }}/ext/masonry.min.js" type="text/javascript"></script>
+    <script src="{{ userBaseUrl }}/ext/music-mapper.js" type="text/javascript"></script>
+  </body>
+</html>
