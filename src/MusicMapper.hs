@@ -16,6 +16,7 @@ import Lastfm (apiKey, artist, json, lastfm, limit, newConnection, period, user)
 import Lastfm.Artist (getTopTags)
 import Lastfm.User (getTopArtists)
 
+import qualified Data.FileCache as FC
 import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Vector as V
@@ -67,8 +68,15 @@ instance FromJSON Artist where
       , url = url
       }
 
-userArtists conn key username periodId = do
+getUserTopArtists conn key username periodId = do
   response <- lastfm conn $ getTopArtists <*> user username <* limit 1000 <* period periodId <*> apiKey key <* Lastfm.json
+  case response of
+    Left _ -> return $ Left []
+    Right x -> return $ Right x
+
+userArtists cache conn key username periodId = do
+  let cacheFile = unpack $ Data.Text.concat ["tmp/", username, "-", periodId, ".cache"]
+  response <- FC.lazyQuery cache cacheFile $ getUserTopArtists conn key username periodId
 
   let artistsList response = do
         case response of
@@ -76,7 +84,7 @@ userArtists conn key username periodId = do
           Right x -> Maybe.fromMaybe [] $ parseMaybe parseArtists x
 
   let updateCountries artist = do
-        countries <- artistCountries conn key (name artist)
+        countries <- artistCountries cache conn key (name artist)
         return $ artist { countries = countries }
 
   updated <- mapM updateCountries $ artistsList response
@@ -88,7 +96,14 @@ artistTags response = do
     Left _ -> return $ []
     Right x -> return $ toListOf (key "toptags" . key "tag" . values . key "name" . _String) x
 
-artistCountries conn key artistName = do
+getArtistTopTags conn key artistName = do
   response <- lastfm conn $ getTopTags <*> artist artistName <*> apiKey key <* Lastfm.json
+  case response of
+    Left _ -> return $ Left []
+    Right x -> return $ Right x
+
+artistCountries cache conn key artistName = do
+  let cacheFile = unpack $ Data.Text.concat ["tmp/", artistName, ".cache"]
+  response <- FC.lazyQuery cache cacheFile $ getArtistTopTags conn key artistName
   tags <- artistTags response
   return $ countriesFor tags

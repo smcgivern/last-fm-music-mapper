@@ -8,6 +8,7 @@ import Network.Wai.Middleware.Static
 import Text.Mustache
 import Web.Scotty
 
+import qualified Data.FileCache as FC
 import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
@@ -63,7 +64,7 @@ setBaseUrl baseUrl app request respond = do
         Nothing -> ["404-not-found"] -- otherwise this will match against the root, too
   app (request { Wai.pathInfo = newPathInfo }) respond
 
-run config conn = do
+run config conn cache = do
   let baseUrl = root config
 
   middleware $ setBaseUrl baseUrl
@@ -98,7 +99,8 @@ run config conn = do
     let template = $(TH.compileMustacheFile "./template/user.html")
     let period = Maybe.fromMaybe (head defaultPeriods) (List.find (\x -> (identifier x) == periodId) defaultPeriods)
 
-    artists <- liftAndCatchIO $ MusicMapper.userArtists conn (key config) username (identifier period)
+    artists <- liftAndCatchIO $ MusicMapper.userArtists cache conn (key config) username (identifier period)
+    liftAndCatchIO $ putStrLn $ show artists
 
     let userPage = UserPage
                    { userBaseUrl = baseUrl
@@ -117,5 +119,6 @@ main = do
       Nothing -> return Config { key = "", port = 3000, root = "" }
 
   conn <- MusicMapper.newConnection
+  cache <- FC.newFileCache
 
-  scotty (port config) (run config conn)
+  scotty (port config) (run config conn cache)
