@@ -100,7 +100,6 @@ run config conn cache = do
     let period = Maybe.fromMaybe (head defaultPeriods) (List.find (\x -> (identifier x) == periodId) defaultPeriods)
 
     artists <- liftAndCatchIO $ MusicMapper.userArtists cache conn (key config) username (identifier period)
-    liftAndCatchIO $ putStrLn $ show artists
 
     let userPage = UserPage
                    { userBaseUrl = baseUrl
