@@ -5,7 +5,6 @@ module Main (main) where
 import Data.Aeson
 import GHC.Generics
 import Network.Wai.Middleware.Static
-import System.Clock (TimeSpec (..))
 import Text.Mustache
 import Web.Scotty
 
@@ -119,6 +118,6 @@ main = do
       Nothing -> return Config { key = "", port = 3000, root = "" }
 
   conn <- MusicMapper.newConnection
-  cache <- C.newCache (Just (TimeSpec 86400 0))
+  cache <- C.newCache Nothing 
 
   scotty (port config) (run config conn cache)
