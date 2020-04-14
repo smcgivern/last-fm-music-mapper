@@ -19,7 +19,8 @@ executable last-fm-music-mapper
                      , MusicMapper
   build-depends:       base >= 4.7 && < 5
                      , aeson
-                     , filecache
+                     , cache
+                     , clock
                      , lens
                      , lens-aeson
                      , liblastfm

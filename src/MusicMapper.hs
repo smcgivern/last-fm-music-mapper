@@ -16,7 +16,7 @@ import Lastfm (apiKey, artist, json, lastfm, limit, newConnection, period, user)
 import Lastfm.Artist (getTopTags)
 import Lastfm.User (getTopArtists)
 
-import qualified Data.FileCache as FC
+import qualified Data.Cache as C
 import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Vector as V
@@ -68,15 +68,15 @@ instance FromJSON Artist where
       , url = url
       }
 
-getUserTopArtists conn key username periodId = do
+getUserTopArtists conn key (username, periodId) = do
   response <- lastfm conn $ getTopArtists <*> user username <* limit 1000 <* period periodId <*> apiKey key <* Lastfm.json
   case response of
     Left _ -> return $ Left []
     Right x -> return $ Right x
 
 userArtists cache conn key username periodId = do
-  let cacheFile = unpack $ Data.Text.concat ["tmp/", username, "-", periodId, ".cache"]
-  response <- FC.lazyQuery cache cacheFile $ getUserTopArtists conn key username periodId
+  let cacheKey = (username, periodId)
+  response <- C.fetchWithCache cache cacheKey $ getUserTopArtists conn key
 
   let artistsList response = do
         case response of
@@ -96,14 +96,14 @@ artistTags response = do
     Left _ -> return $ []
     Right x -> return $ toListOf (key "toptags" . key "tag" . values . key "name" . _String) x
 
-getArtistTopTags conn key artistName = do
+getArtistTopTags conn key (artistName, _) = do
   response <- lastfm conn $ getTopTags <*> artist artistName <*> apiKey key <* Lastfm.json
   case response of
     Left _ -> return $ Left []
     Right x -> return $ Right x
 
 artistCountries cache conn key artistName = do
-  let cacheFile = unpack $ Data.Text.concat ["tmp/", artistName, ".cache"]
-  response <- FC.lazyQuery cache cacheFile $ getArtistTopTags conn key artistName
+  response <- C.fetchWithCache cache (artistName, "tags") $ getArtistTopTags conn key
+  -- response <- getArtistTopTags conn key artistName
   tags <- artistTags response
   return $ countriesFor tags
