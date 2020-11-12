@@ -5,9 +5,6 @@
 
 packages:
 - completed:
-    cabal-file:
-      size: 3493
-      sha256: 364452826204a5ea8994c1a42cf40f1c213ac201a381573992412fca8aac3d96
     name: liblastfm
     version: 0.7.0
     git: https://github.com/smcgivern/liblastfm.git
@@ -18,6 +15,13 @@ packages:
   original:
     git: https://github.com/smcgivern/liblastfm.git
     commit: 08d89aa0066d2029f3150a32d90f3a4833089d46
+- completed:
+    hackage: lens-4.19.2@sha256:3ed9c993cdd6b397f9f56cef5f71cc51003e15eeafe76948dabf36ee22d0e6ae,16053
+    pantry-tree:
+      size: 8330
+      sha256: 127feaac3b08b04420d8cfef0ac53a183538f4284914099e8236feb03773707d
+  original:
+    hackage: lens-4.19.2
 snapshots:
 - completed:
     size: 489011
