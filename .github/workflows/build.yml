@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /root/.stack
+            ~/.stack
             .stack-work
           key: last-fm-music-mapper-${{ hashFiles('stack.yaml') }}-${{ hashFiles('last-fm-music-mapper.cabal') }}
       - name: Setup
