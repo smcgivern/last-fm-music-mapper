@@ -57,12 +57,12 @@ defaultPeriods =
   , Period { identifier = "overall", name = "Overall" }
   ]
 
-setBaseUrl baseUrl app request respond = do
-  let oldPathInfo = Wai.pathInfo request
+setBaseUrl baseUrl app req respond = do
+  let oldPathInfo = Wai.pathInfo req
   let newPathInfo = case List.stripPrefix (tail $ Text.splitOn "/" baseUrl) oldPathInfo of
         Just x -> x
         Nothing -> ["404-not-found"] -- otherwise this will match against the root, too
-  app (request { Wai.pathInfo = newPathInfo }) respond
+  app (req { Wai.pathInfo = newPathInfo }) respond
 
 run config conn cache = do
   let baseUrl = root config
@@ -71,10 +71,10 @@ run config conn cache = do
   middleware $ staticPolicy (addBase "./public")
 
   get "/" $ do
-    username <- param "username" `rescue` (\_ -> next)
+    u <- param "username" `rescue` (\_ -> next)
     period <- param "period" `rescue` (\_ -> next)
 
-    redirect $ mconcat [Lazy.fromStrict baseUrl, "/:", username, "/", period, "/"]
+    redirect $ mconcat [Lazy.fromStrict baseUrl, "/:", u, "/", period, "/"]
 
   get "/" $ do
     let template = $(TH.compileMustacheFile "./template/index.html")
@@ -87,25 +87,25 @@ run config conn cache = do
     html $ renderMustache template (toJSON indexPage)
 
   get (regex "^/:([^/]+)/?$") $ do
-    username <- param "1"
+    u <- param "1"
     let period = Lazy.fromStrict $ identifier $ head defaultPeriods
 
-    redirect $ mconcat [Lazy.fromStrict baseUrl, "/:", username, "/", period, "/"]
+    redirect $ mconcat [Lazy.fromStrict baseUrl, "/:", u, "/", period, "/"]
 
   get (regex "^/:([^/]+)/([^/]+)/?$") $ do
-    username <- param "1"
+    u <- param "1"
     periodId <- param "2"
 
     let template = $(TH.compileMustacheFile "./template/user.html")
     let period = Maybe.fromMaybe (head defaultPeriods) (List.find (\x -> (identifier x) == periodId) defaultPeriods)
 
-    artists <- liftAndCatchIO $ MusicMapper.userArtists cache conn (key config) username (identifier period)
+    a <- liftAndCatchIO $ MusicMapper.userArtists cache conn (key config) u (identifier period)
 
     let userPage = UserPage
                    { userBaseUrl = baseUrl
-                   , username = username
+                   , username = u
                    , lowerPeriodName = Text.toLower $ name $ period
-                   , artists = artists
+                   , artists = a
                    }
 
     html $ renderMustache template (toJSON userPage)
@@ -118,6 +118,6 @@ main = do
       Nothing -> return Config { key = "", port = 3000, root = "" }
 
   conn <- MusicMapper.newConnection
-  cache <- C.newCache Nothing 
+  cache <- C.newCache Nothing
 
   scotty (port config) (run config conn cache)
