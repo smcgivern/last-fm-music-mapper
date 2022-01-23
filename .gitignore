@@ -1,6 +1,7 @@
 .sass-cache/
 .stack-work/
 *.mk
+*.service
 config.json
 last-fm-music-mapper-linux
 public/ext/style.css
