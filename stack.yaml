@@ -11,6 +11,3 @@ extra-deps:
 ghc-options:
   "$locals": -Wall -fno-warn-missing-signatures
   "$targets": -Werror
-
-nix:
-  enable: true
