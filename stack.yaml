@@ -1,4 +1,4 @@
-resolver: lts-15.1
+resolver: lts-20.14
 
 packages:
 - .
@@ -6,8 +6,11 @@ packages:
 extra-deps:
 - git: https://github.com/smcgivern/liblastfm.git
   commit: 08d89aa0066d2029f3150a32d90f3a4833089d46
-- lens-4.19.2
+- lens-5.2.1
 
 ghc-options:
   "$locals": -Wall -fno-warn-missing-signatures
   "$targets": -Werror
+
+nix:
+  enable: true
