@@ -5,7 +5,7 @@ jobs:
     name: Build Last.fm music mapper
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: haskell/actions/setup@v2
         with:
           ghc-version: '9.2.7'
@@ -13,7 +13,7 @@ jobs:
           stack-version: 'latest'
       - name: Cache Stack
         id: cache-stack
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.stack
@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: stack --no-terminal install
       - name: Upload
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: last-fm-music-mapper
           path: ~/.local/bin/last-fm-music-mapper
